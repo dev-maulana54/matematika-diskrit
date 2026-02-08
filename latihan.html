@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiskritLab - Latihan Matematika Diskrit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #6366f1;
+      --accent: #10b981;
+    }
+    
+    * { scroll-behavior: smooth; }
+    
+    .font-main { font-family: 'Space Grotesk', system-ui, sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .gradient-text {
+      background: linear-gradient(135deg, #6366f1 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-glow {
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.1);
+      transition: all 0.3s ease;
+    }
+    .card-glow:hover {
+      box-shadow: 0 0 60px rgba(99, 102, 241, 0.2);
+    }
+    
+    .nav-blur {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    .accordion-content.open {
+      max-height: 3000px;
+    }
+    
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .materi-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-900 text-slate-100 font-main overflow-auto">
+  <div id="app" class="w-full min-h-full"><!-- Navbar -->
+   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur bg-slate-900/80 border-b border-slate-700/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex items-center justify-between h-16"><a href="#beranda" class="flex items-center gap-2">
+       <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-emerald-500 flex items-center justify-center"><span class="text-white font-bold text-sm">D</span>
+       </div><span id="site-title" class="font-bold text-xl gradient-text">DiskritLab</span> </a>
+      <div class="hidden md:flex items-center gap-8"><a href="#beranda" class="text-slate-300 hover:text-white transition-colors">Beranda</a> <a href="#latihan" class="text-slate-300 hover:text-white transition-colors">Latihan</a>
+      </div><button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-slate-800 transition-colors">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div>
+    </div>
+   </nav><!-- Mobile Menu -->
+   <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 bottom-0 w-72 bg-slate-800 z-50 p-6 md:hidden"><button id="close-menu-btn" class="absolute top-4 right-4 p-2 rounded-lg hover:bg-slate-700">
+     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+     </svg></button>
+    <div class="flex flex-col gap-4 mt-12"><a href="#beranda" class="nav-link text-lg py-2">Beranda</a> <a href="#latihan" class="nav-link text-lg py-2">Latihan</a>
+    </div>
+   </div>
+   <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div><!-- Hero Section -->
+   <section id="beranda" class="relative pt-24 pb-16 lg:pt-32 lg:pb-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center">
+      <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">Latihan <span class="gradient-text">Matematika Diskrit</span></h1>
+      <p id="hero-subtitle" class="text-lg text-slate-400 mb-8 max-w-2xl mx-auto">Soal latihan mudah sampai menengah dengan penjelasan langkah demi langkah yang mudah dipahami</p><a href="#latihan" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 rounded-xl font-medium transition-all hover:shadow-lg hover:shadow-indigo-500/25"> Mulai Latihan 
+       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+       </svg></a>
+     </div>
+    </div>
+   </section><!-- Latihan Section -->
+   <section id="latihan" class="py-16 lg:py-24 bg-slate-800/30">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12">
+      <h2 class="text-3xl lg:text-4xl font-bold mb-4">Soal Latihan Interaktif</h2>
+      <p class="text-slate-400">Pilih jumlah soal dan mulai belajar dengan penjelasan yang jelas</p>
+     </div>
+     <div id="quiz-container" class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden"><!-- Quiz Start Screen -->
+      <div id="quiz-start" class="p-8 text-center">
+       <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-indigo-500 to-emerald-500 flex items-center justify-center">
+        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+       </div>
+       <h3 class="text-2xl font-bold mb-4">Siap Mengerjakan Soal?</h3>
+       <p class="text-slate-400 mb-6 max-w-md mx-auto">Kerjakan soal latihan dengan penjelasan langkah demi langkah yang mudah dipahami</p><button id="start-quiz-btn" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 rounded-xl font-semibold text-lg transition-all hover:shadow-lg hover:shadow-indigo-500/25"> Mulai Latihan 
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg></button>
+      </div><!-- Question Selection Screen -->
+      <div id="quiz-select" class="hidden p-8">
+       <div class="max-w-2xl mx-auto">
+        <h3 class="text-2xl font-bold mb-8 text-center">Pilih Topik &amp; Jumlah Soal</h3>
+        <div class="bg-slate-900/50 rounded-2xl border border-slate-700/50 p-6 lg:p-8 mb-8"><!-- Topic Selection -->
+         <div class="mb-8"><label class="block text-sm font-medium text-slate-300 mb-4">Pilih Topik:</label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><button class="topic-btn py-3 px-4 rounded-lg border border-indigo-500 bg-indigo-500/20 text-indigo-300 font-medium transition-all" data-topic="semua"> Semua Topik </button> <button class="topic-btn py-3 px-4 rounded-lg border border-slate-600 hover:border-indigo-500 text-slate-300 hover:text-indigo-300 transition-all" data-topic="logika"> Logika Matematika </button> <button class="topic-btn py-3 px-4 rounded-lg border border-slate-600 hover:border-indigo-500 text-slate-300 hover:text-indigo-300 transition-all" data-topic="himpunan"> Himpunan </button> <button class="topic-btn py-3 px-4 rounded-lg border border-slate-600 hover:border-indigo-500 text-slate-300 hover:text-indigo-300 transition-all" data-topic="campuran"> Campuran </button>
+          </div>
+         </div><!-- Question Count Selection -->
+         <div class="mb-8"><label class="block text-sm font-medium text-slate-300 mb-4">Jumlah Soal:</label>
+          <div class="flex items-center justify-center gap-2 sm:gap-4 mb-6"><button id="decrease-btn" class="flex-shrink-0 p-2.5 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+            </svg></button> <input id="question-count" type="range" min="5" max="25" value="10" class="flex-1 h-2.5 bg-slate-700 rounded-lg appearance-none cursor-pointer" style="accent-color: #6366f1;"> <button id="increase-btn" class="flex-shrink-0 p-2.5 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg></button>
+          </div>
+          <div class="text-center p-4 bg-slate-800/50 rounded-lg border border-slate-700/30 mb-4">
+           <p class="text-slate-400 text-xs mb-1">Soal yang akan dikerjakan:</p>
+           <p id="selected-count" class="text-4xl font-bold gradient-text">10</p>
+          </div>
+          <div class="grid grid-cols-3 sm:grid-cols-5 gap-2"><button class="preset-btn py-2.5 px-2 rounded-lg border border-slate-600 hover:border-indigo-500 text-xs font-medium transition-colors hover:bg-slate-700/50" data-count="5">5</button> <button class="preset-btn py-2.5 px-2 rounded-lg border border-slate-600 hover:border-indigo-500 text-xs font-medium transition-colors hover:bg-slate-700/50" data-count="10">10</button> <button class="preset-btn py-2.5 px-2 rounded-lg border border-indigo-500 bg-indigo-500/20 text-xs font-medium" data-count="15">15</button> <button class="preset-btn py-2.5 px-2 rounded-lg border border-slate-600 hover:border-indigo-500 text-xs font-medium transition-colors hover:bg-slate-700/50" data-count="20">20</button> <button class="preset-btn py-2.5 px-2 rounded-lg border border-slate-600 hover:border-indigo-500 text-xs font-medium transition-colors hover:bg-slate-700/50" data-count="25">25</button>
+          </div>
+         </div>
+        </div>
+        <div class="flex gap-4 justify-center"><button id="back-to-start-btn" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-medium transition-colors"> Kembali </button> <button id="start-selected-btn" class="px-8 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 rounded-xl font-semibold transition-all"> Mulai Latihan </button>
+        </div>
+       </div>
+      </div><!-- Quiz Question Screen -->
+      <div id="quiz-question" class="hidden"><!-- Progress Bar -->
+       <div class="p-4 border-b border-slate-700/50">
+        <div class="flex items-center justify-between mb-2"><span id="quiz-progress-text" class="text-sm text-slate-400">Soal 1 dari 10</span> <span id="quiz-category" class="text-xs px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full">Logika</span>
+        </div>
+        <div class="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
+         <div id="quiz-progress-bar" class="h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full transition-all" style="width: 10%"></div>
+        </div>
+       </div><!-- Question -->
+       <div class="p-6 lg:p-8 max-h-[55vh] overflow-y-auto">
+        <h3 id="question-text" class="text-lg lg:text-xl font-semibold mb-6 whitespace-pre-line leading-relaxed"></h3><!-- Options -->
+        <div id="options-container" class="space-y-3 mb-6"></div><!-- Explanation -->
+        <div id="explanation-container" class="hidden mt-6 p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/30">
+         <p class="font-semibold mb-2 flex items-center gap-2"><span id="answer-icon"></span> <span id="answer-label"></span></p>
+         <p id="explanation-text" class="text-slate-300 text-sm whitespace-pre-line"></p>
+        </div>
+       </div><!-- Navigation -->
+       <div class="p-4 border-t border-slate-700/50 flex items-center justify-between"><button id="prev-btn" class="px-4 py-2 text-slate-400 hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50">
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+         </svg> Sebelumnya </button> <button id="next-btn" class="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 rounded-lg font-medium transition-colors flex items-center gap-2"> Selanjutnya 
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+         </svg></button>
+       </div>
+      </div><!-- Quiz Result Screen -->
+      <div id="quiz-result" class="hidden p-8">
+       <div class="text-center">
+        <div id="result-icon" class="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"></div>
+        <h3 id="result-title" class="text-2xl lg:text-3xl font-bold mb-2"></h3>
+        <p id="result-score" class="text-4xl font-bold gradient-text mb-4"></p>
+        <p id="result-message" class="text-slate-400 mb-8 max-w-md mx-auto"></p>
+        <div class="flex gap-4 justify-center"><button id="restart-btn" class="px-6 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl font-semibold transition-colors"> Ulangi </button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+  </div>
+  <script>
+    // Configuration
+    const defaultConfig = {
+      site_title: "DiskritLab",
+      hero_title: "Latihan Matematika Diskrit dengan Cara Praktis",
+      hero_subtitle: "Soal latihan mudah sampai menengah dengan penjelasan langkah demi langkah",
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Bank Soal - Format Baru dengan Penjelasan Detail
+    const allQuestions = [
+      // ===== LOGIKA MATEMATIKA - NEGASI =====
+      {
+        id: 1, category: "Logika", topic: "Negasi",
+        question: "p: \"Saya suka makan nasi goreng\"\n\nTentukan negasi dari p (¬p)!",
+        options: ["Saya sangat suka makan nasi goreng", "Saya tidak suka makan nasi goreng", "Saya suka makan makanan lain", "Nasi goreng itu tidak enak"],
+        answerIndex: 1,
+        explanation: "NEGASI = Membalikkan pernyataan (menambah TIDAK)\n\nJika p: \"Saya suka makan nasi goreng\" (BENAR)\nMaka ¬p: \"Saya TIDAK suka makan nasi goreng\" (SALAH)\n\nCara mudah: Tambahkan 'TIDAK' atau ubah menjadi kebalikannya!\n\nJawaban: B (Saya tidak suka makan nasi goreng)"
+      },
+      {
+        id: 2, category: "Logika", topic: "Negasi",
+        question: "p: \"2 + 3 = 5\"\n\nNegasi dari p adalah...",
+        options: ["2 + 3 ≠ 5 (tidak sama dengan 5)", "2 + 3 = 6", "2 + 3 > 5", "2 + 3 < 5"],
+        answerIndex: 0,
+        explanation: "Negasi dari pernyataan sama dengan (=) adalah tidak sama dengan (≠).\n\np: \"2 + 3 = 5\" adalah BENAR\n¬p: \"2 + 3 ≠ 5\" adalah SALAH\n\nPerhatian: Jangan ubah angkanya! Hanya ubah simbol atau tambah TIDAK.\n\nJawaban: A (2 + 3 ≠ 5)"
+      },
+      {
+        id: 3, category: "Logika", topic: "Negasi",
+        question: "p: \"Semua siswa hadir\"\n\nNegasi dari p adalah...",
+        options: ["Semua siswa tidak hadir", "Ada siswa yang tidak hadir", "Beberapa siswa hadir", "Tidak ada siswa yang hadir"],
+        answerIndex: 1,
+        explanation: "Negasi dari 'SEMUA' adalah 'ADA YANG TIDAK'.\n\np: \"Semua siswa hadir\" (pernyataan universal)\n¬p: \"Ada siswa yang TIDAK hadir\" (bukan semua hadir)\n\nIngat: Negasi 'semua' bukan berarti 'tidak ada semua', tapi 'ada yang tidak'.\n\nJawaban: B (Ada siswa yang tidak hadir)"
+      },
+      {
+        id: 4, category: "Logika", topic: "Negasi",
+        question: "p: \"Kucing adalah hewan peliharaan\"\n\nNegasi dari p adalah...",
+        options: ["Kucing bukan hewan peliharaan", "Kucing adalah hewan buas", "Hewan peliharaan bukan kucing", "Semua hewan peliharaan adalah kucing"],
+        answerIndex: 0,
+        explanation: "Negasi dari pernyataan dengan 'adalah' menjadi 'BUKAN'.\n\np: \"Kucing adalah hewan peliharaan\" (BENAR)\n¬p: \"Kucing BUKAN hewan peliharaan\" (SALAH)\n\nCara: Ubah 'adalah' menjadi 'bukan'.\n\nJawaban: A (Kucing bukan hewan peliharaan)"
+      },
+      {
+        id: 5, category: "Logika", topic: "Negasi",
+        question: "Jika ¬p = \"Saya tidak punya uang\", maka p adalah...",
+        options: ["Saya punya uang", "Saya sedikit punya uang", "Uang saya hilang", "Saya punya sedikit uang"],
+        answerIndex: 0,
+        explanation: "Negasi dari negasi sama dengan pernyataan awal (¬¬p = p).\n\n¬p: \"Saya tidak punya uang\"\nMaka p: \"Saya PUNYA uang\" (kebalikan)\n\nCara: Hilangkan kata 'TIDAK' dari negasi.\n\nJawaban: A (Saya punya uang)"
+      },
+      
+      // ===== LOGIKA MATEMATIKA - KONJUNGSI =====
+      {
+        id: 6, category: "Logika", topic: "Konjungsi",
+        question: "p: \"Cuaca cerah\" (BENAR)\nq: \"Saya pergi berlibur\" (BENAR)\n\nNilai p ∧ q adalah...",
+        options: ["BENAR", "SALAH", "Bergantung cuaca", "Tidak terdefinisi"],
+        answerIndex: 0,
+        explanation: "KONJUNGSI (∧) = Operasi DAN\nHasil HANYA BENAR jika KEDUA pernyataan BENAR.\n\np ∧ q (p DAN q)\n= \"Cuaca cerah DAN saya pergi berlibur\"\n= BENAR DAN BENAR\n= BENAR\n\nIngat: Jika salah satu SALAH, hasilnya SALAH!\n\nJawaban: A (BENAR)"
+      },
+      {
+        id: 7, category: "Logika", topic: "Konjungsi",
+        question: "p: \"5 adalah bilangan ganjil\" (BENAR)\nq: \"5 adalah bilangan genap\" (SALAH)\n\nNilai p ∧ q adalah...",
+        options: ["BENAR", "SALAH", "Tidak dapat ditentukan", "Tergantung"],
+        answerIndex: 1,
+        explanation: "KONJUNGSI hanya BENAR jika kedua-duanya BENAR.\n\np ∧ q = BENAR ∧ SALAH\n\nKarena ada satu yang SALAH, maka hasil SALAH.\n\nTabel Konjungsi:\nBENAR ∧ BENAR = BENAR\nBENAR ∧ SALAH = SALAH ← Di sini\nSALAH ∧ BENAR = SALAH\nSALAH ∧ SALAH = SALAH\n\nJawaban: B (SALAH)"
+      },
+      {
+        id: 8, category: "Logika", topic: "Konjungsi",
+        question: "\"Saya mempunyai buku BENAR, BESERTA saya mempunyai pensil SALAH\"\n\nPernyataan gabungan ini (menggunakan DAN) bernilai...",
+        options: ["BENAR", "SALAH", "Ragu-ragu", "Tidak jelas"],
+        answerIndex: 1,
+        explanation: "Kata 'BESERTA' = DAN (konjungsi).\n\nPernyataan 1: \"Saya punya buku\" = BENAR\nPernyataan 2: \"Saya punya pensil\" = SALAH\n\nGabungan dengan DAN:\nBENAR DAN SALAH = SALAH\n\nKarena salah satu komponen tidak terpenuhi, maka pernyataan gabungan SALAH.\n\nJawaban: B (SALAH)"
+      },
+      {
+        id: 9, category: "Logika", topic: "Konjungsi",
+        question: "Kapan p ∧ q bernilai BENAR?",
+        options: ["Saat p BENAR saja", "Saat q BENAR saja", "Saat p dan q keduanya BENAR", "Saat salah satu BENAR"],
+        answerIndex: 2,
+        explanation: "Konjungsi (DAN) hanya BENAR dalam SATU kasus:\nKedua-duanya harus BENAR!\n\nAnologi kehidupan: Syarat diterima di universitas adalah\n\"Nilai ≥ 70 DAN Hadir ≥ 80%\"\n\nHanya diterima jika kedua-duanya terpenuhi.\nJika nilai bagus tapi hadir sedikit → Tidak diterima (SALAH).\nJika nilai jelek tapi hadir banyak → Tidak diterima (SALAH).\nHanya jika kedua-duanya baik → Diterima (BENAR).\n\nJawaban: C (Saat p dan q keduanya BENAR)"
+      },
+      
+      // ===== LOGIKA MATEMATIKA - DISJUNGSI =====
+      {
+        id: 10, category: "Logika", topic: "Disjungsi",
+        question: "p: \"Hari ini hujan\" (SALAH)\nq: \"Hari ini panas\" (BENAR)\n\nNilai p ∨ q adalah...",
+        options: ["BENAR", "SALAH", "Bergantung", "Tidak jelas"],
+        answerIndex: 0,
+        explanation: "DISJUNGSI (∨) = Operasi ATAU\nHasil BENAR jika MINIMAL ADA SATU yang BENAR.\n\np ∨ q = \"Hari ini hujan ATAU hari ini panas\"\n= SALAH ATAU BENAR\n= BENAR\n\nKarena ada satu yang BENAR, hasilnya BENAR!\n\nTabel Disjungsi:\nBENAR ∨ BENAR = BENAR\nBENAR ∨ SALAH = BENAR\nSALAH ∨ BENAR = BENAR ← Di sini\nSALAH ∨ SALAH = SALAH (Hanya ini SALAH!)\n\nJawaban: A (BENAR)"
+      },
+      {
+        id: 11, category: "Logika", topic: "Disjungsi",
+        question: "\"Untuk masuk bioskop, Anda harus punya tiket ATAU punya kartu member.\"\n\nJika Anda punya tiket (BENAR) tapi tidak punya kartu member (SALAH), bisa masuk?",
+        options: ["Ya, bisa masuk", "Tidak, tidak bisa masuk", "Tergantung situasi", "Ragu-ragu"],
+        answerIndex: 0,
+        explanation: "Kondisi masuk: tiket ATAU kartu member.\nIni adalah disjungsi (ATAU).\n\nAnda punya tiket (BENAR) ATAU punya kartu (SALAH)\n= BENAR ATAU SALAH\n= BENAR\n\nMaka: Ya, Anda bisa masuk karena punya salah satu (tiket)!\n\nDiajungsi bekerja seperti ini: Jika syarat \"A ATAU B\" ada, Anda bisa memenuhi hanya satu saja.\n\nJawaban: A (Ya, bisa masuk)"
+      },
+      {
+        id: 12, category: "Logika", topic: "Disjungsi",
+        question: "p: \"2 < 5\" (BENAR)\nq: \"2 > 5\" (SALAH)\n\nNilai p ∨ q adalah...",
+        options: ["BENAR", "SALAH", "Tidak dapat ditentukan", "Bergantung"],
+        answerIndex: 0,
+        explanation: "p ∨ q = BENAR ∨ SALAH = BENAR\n\nDalam disjungsi, cukup ada satu yang benar untuk hasil BENAR.\n\nBukti:\n2 < 5 adalah BENAR (2 memang lebih kecil dari 5)\n2 > 5 adalah SALAH (2 tidak lebih besar dari 5)\n\nGabungan: BENAR ATAU SALAH = BENAR\n\nJawaban: A (BENAR)"
+      },
+      {
+        id: 13, category: "Logika", topic: "Disjungsi",
+        question: "Kapan p ∨ q bernilai SALAH?",
+        options: ["Saat p SALAH saja", "Saat q SALAH saja", "Saat keduanya SALAH", "Saat salah satu SALAH"],
+        answerIndex: 2,
+        explanation: "Disjungsi (ATAU) HANYA SALAH dalam SATU kasus:\nKEDUA-DUANYA harus SALAH!\n\nAnalogi: \"Anda bisa makan nasi ATAU roti.\"\n- Jika makan nasi saja → Puas (BENAR)\n- Jika makan roti saja → Puas (BENAR)\n- Jika makan dua-duanya → Puas (BENAR)\n- Jika tidak makan keduanya → Tidak puas (SALAH)\n\nJadi disjungsi SALAH hanya saat kedua-duanya SALAH.\n\nJawaban: C (Saat keduanya SALAH)"
+      },
+      
+      // ===== LOGIKA MATEMATIKA - IMPLIKASI =====
+      {
+        id: 14, category: "Logika", topic: "Implikasi",
+        question: "\"Jika cuaca cerah (p = BENAR), maka saya ke pantai (q = BENAR)\"\n\nNilai implikasi p → q adalah...",
+        options: ["BENAR", "SALAH", "Tidak terdefinisi", "Bergantung"],
+        answerIndex: 0,
+        explanation: "IMPLIKASI (→) = Operasi \"JIKA...MAKA\"\nCara berpikir: JANJI\n\nJika cuaca cerah (JANJI BERLAKU), maka saya ke pantai (JANJI DITEPATI)\n\nHasil: JANJI DITEPATI = BENAR\n\nTabel Implikasi:\nJIKA BENAR MAKA BENAR = BENAR (janji ditepati) ← Di sini\nJIKA BENAR MAKA SALAH = SALAH (janji dilanggar)\nJIKA SALAH MAKA BENAR = BENAR (janji tidak berlaku, aman)\nJIKA SALAH MAKA SALAH = BENAR (janji tidak berlaku, aman)\n\nJawaban: A (BENAR)"
+      },
+      {
+        id: 15, category: "Logika", topic: "Implikasi",
+        question: "\"Jika mendapat nilai A (p = BENAR), maka dapat hadiah motor (q = SALAH)\"\n\nNilai implikasi p → q adalah...",
+        options: ["BENAR", "SALAH", "Tidak terdefinisi", "Ragu-ragu"],
+        answerIndex: 1,
+        explanation: "Ini adalah JANJI DILANGGAR!\n\nJanji: \"Jika dapat nilai A, maka dapat hadiah motor\"\nKenyataan: Dapat nilai A (BENAR) tapi TIDAK dapat hadiah motor (SALAH)\n\nHasil: JANJI DILANGGAR = SALAH\n\nHanya SATU kasus implikasi yang SALAH:\n\"JIKA BENAR MAKA SALAH = SALAH\" (janji tidak ditepati)\n\nJawaban: B (SALAH)"
+      },
+      {
+        id: 16, category: "Logika", topic: "Implikasi",
+        question: "\"Jika 1+1=3 (p = SALAH), maka bulan berbentuk persegi (q = SALAH)\"\n\nNilai implikasi p → q adalah...",
+        options: ["BENAR", "SALAH", "Tidak valid", "Tidak pasti"],
+        answerIndex: 0,
+        explanation: "Ketika syarat TIDAK TERPENUHI (p = SALAH), implikasi selalu AMAN (BENAR).\nIni disebut \"Vacuous Truth\" (kebenaran kosong).\n\n1+1=3 adalah SALAH → Syarat tidak terpenuhi\nBulan persegi adalah SALAH → Kesimpulan tidak penting lagi\n\nKarena syarat tidak terpenuhi, janji tidak berlaku → BENAR (aman)\n\nAnalogi: \"Jika Anda bisa terbang, maka Anda adalah burung\"\nAnda tidak bisa terbang → Janji tidak berlaku → Aman (BENAR)\n\nJawaban: A (BENAR)"
+      },
+      {
+        id: 17, category: "Logika", topic: "Implikasi",
+        question: "Kapan p → q bernilai SALAH?",
+        options: ["Saat p BENAR", "Saat q SALAH", "Saat p BENAR dan q SALAH", "Saat keduanya SALAH"],
+        answerIndex: 2,
+        explanation: "Implikasi HANYA SALAH dalam SATU kasus:\nJIKA SYARAT (p) BENAR tapi HASIL (q) SALAH\n\nAnalogi \"janji\":\n- Janji ditepati (BENAR → BENAR) = BENAR ✓\n- Janji dilanggar (BENAR → SALAH) = SALAH ✗ ← Hanya ini\n- Janji tidak berlaku (SALAH → apapun) = BENAR ✓\n\nJawaban: C (Saat p BENAR dan q SALAH)"
+      },
+      
+      // ===== LOGIKA MATEMATIKA - BIIMPLIKASI =====
+      {
+        id: 18, category: "Logika", topic: "Biimplikasi",
+        question: "\"x adalah bilangan genap JIKA DAN HANYA JIKA x habis dibagi 2\"\n\nKedua pernyataan selalu:\n(p = BENAR, q = BENAR)\n\nNilai p ↔ q adalah...",
+        options: ["BENAR", "SALAH", "Tergantung x", "Tidak pasti"],
+        answerIndex: 0,
+        explanation: "BIIMPLIKASI (↔) = \"JIKA DAN HANYA JIKA\" = Dua arah\nHasil BENAR jika KEDUA pernyataan memiliki nilai SAMA.\n\nJika x genap (BENAR) ↔ x habis dibagi 2 (BENAR)\n= BENAR ↔ BENAR\n= BENAR (sama nilainya)\n\nTabel Biimplikasi:\nBENAR ↔ BENAR = BENAR (sama) ← Di sini\nBENAR ↔ SALAH = SALAH (berbeda)\nSALAH ↔ BENAR = SALAH (berbeda)\nSALAH ↔ SALAH = BENAR (sama)\n\nJawaban: A (BENAR)"
+      },
+      {
+        id: 19, category: "Logika", topic: "Biimplikasi",
+        question: "\"Segitiga memiliki 3 sisi JIKA DAN HANYA JIKA segitiga memiliki 3 sudut\"\n\n(p = BENAR, q = BENAR)\n\nNilai p ↔ q adalah...",
+        options: ["BENAR", "SALAH", "Tidak jelas", "Bergantung"],
+        answerIndex: 0,
+        explanation: "Biimplikasi benar ketika kedua pernyataan SAMA nilainya.\n\nPernyataan 1: \"Segitiga memiliki 3 sisi\" = BENAR\nPernyataan 2: \"Segitiga memiliki 3 sudut\" = BENAR\n\nKedua-duanya BENAR → Nilai SAMA → Biimplikasi BENAR\n\nBiimplikasi adalah hubungan \"setara\" (ekuivalen).\nJika satu benar, yang lain juga benar.\nJika satu salah, yang lain juga salah.\n\nJawaban: A (BENAR)"
+      },
+      {
+        id: 20, category: "Logika", topic: "Biimplikasi",
+        question: "\"Air membeku JIKA DAN HANYA JIKA suhu mencapai 0°C\"\n\n(p = BENAR, q = BENAR)\n\nBiimplikasi ini bernilai...",
+        options: ["BENAR", "SALAH", "Tidak pasti", "Tergantung cuaca"],
+        answerIndex: 0,
+        explanation: "Air membeku (BENAR) ↔ Suhu mencapai 0°C (BENAR)\n= BENAR ↔ BENAR\n= BENAR\n\nBiimplikasi ini benar karena:\n- Jika air membeku → Suhu pasti 0°C\n- Jika suhu 0°C → Air pasti membeku\n\nKeduanya ekuivalen (setara), nilai sama.\n\nJawaban: A (BENAR)"
+      },
+      
+      // ===== HIMPUNAN - DASAR =====
+      {
+        id: 21, category: "Himpunan", topic: "Anggota Himpunan",
+        question: "A = {1, 2, 3, 4, 5}\n\nApakah 3 ∈ A (3 adalah anggota A)?",
+        options: ["Ya (∈ = anggota)", "Tidak (∉ = bukan anggota)", "Mungkin", "Tidak jelas"],
+        answerIndex: 0,
+        explanation: "HIMPUNAN = Kumpulan objek terdefinisi\n\nA = {1, 2, 3, 4, 5} artinya:\nA adalah himpunan yang beranggotakan: 1, 2, 3, 4, 5\n\n3 ∈ A (dibaca: 3 adalah anggota A)\nKarena 3 ada dalam daftar {1, 2, 3, 4, 5}\n\nSimbol:\n∈ = anggota\n∉ = bukan anggota\n\nJawaban: A (Ya, 3 ∈ A)"
+      },
+      {
+        id: 22, category: "Himpunan", topic: "Anggota Himpunan",
+        question: "A = {1, 2, 3, 4, 5}\n\nApakah 7 ∉ A (7 bukan anggota A)?",
+        options: ["Ya, 7 bukan anggota A", "Tidak, 7 adalah anggota A", "Tidak pasti", "Tergantung definisi"],
+        answerIndex: 0,
+        explanation: "7 ∉ A (dibaca: 7 bukan anggota A)\n\nKarena 7 tidak ada dalam daftar {1, 2, 3, 4, 5}\n\nPerhatian:\n- 3 ∈ A karena 3 ada dalam himpunan\n- 7 ∉ A karena 7 tidak ada dalam himpunan\n\nJawaban: A (Ya, 7 ∉ A)"
+      },
+      {
+        id: 23, category: "Himpunan", topic: "Himpunan Kosong",
+        question: "Manakah yang merupakan himpunan kosong?",
+        options: ["{0}", "{ }", "{∅}", "Pilihan B dan C"],
+        answerIndex: 3,
+        explanation: "HIMPUNAN KOSONG = Himpunan tanpa anggota\n\nNotasi: { } atau ∅\n\nContoh himpunan kosong:\n- Himpunan bilangan negatif yang lebih dari 5\n- Himpunan manusia yang berusia 500 tahun\n- Himpunan singkat yang memiliki 10 huruf\n\nPerhatian:\n{0} ≠ ∅\nKarena {0} memiliki 1 anggota (angka 0)\nSedangkan ∅ tidak memiliki anggota apapun\n\nJawaban: D (Pilihan B dan C benar, keduanya simbol himpunan kosong)"
+      },
+      {
+        id: 24, category: "Himpunan", topic: "Himpunan Bagian",
+        question: "A = {1, 2, 3}\nB = {1, 2, 3, 4, 5}\n\nApakah A ⊆ B (A adalah himpunan bagian B)?",
+        options: ["Ya, A ⊆ B", "Tidak, A ⊄ B", "Mungkin", "Tidak jelas"],
+        answerIndex: 0,
+        explanation: "HIMPUNAN BAGIAN (SUBSET) = A ⊆ B\nArtinya: Semua anggota A juga ada di B\n\nA = {1, 2, 3}\nB = {1, 2, 3, 4, 5}\n\nCek:\n- 1 ∈ A dan 1 ∈ B ✓\n- 2 ∈ A dan 2 ∈ B ✓\n- 3 ∈ A dan 3 ∈ B ✓\n\nSemua anggota A ada di B, maka A ⊆ B (BENAR)\n\nAnalogi: Semua beruang adalah hewan → Himpunan beruang ⊆ Himpunan hewan\n\nJawaban: A (Ya, A ⊆ B)"
+      },
+      {
+        id: 25, category: "Himpunan", topic: "Diagram Venn",
+        question: "Dari 50 siswa, 30 menyukai Matematika, 25 menyukai IPA, dan 10 menyukai keduanya.\n\nBerapa siswa yang menyukai Matematika SAJA (tidak menyukai IPA)?",
+        options: ["10", "15", "20", "30"],
+        answerIndex: 2,
+        explanation: "Gunakan DIAGRAM VENN atau formula:\n\nSiswa Matematika saja = Total Matematika - Keduanya\n                       = 30 - 10\n                       = 20 siswa\n\nRincian:\n- Matematika saja: 20\n- IPA saja: 25 - 10 = 15\n- Keduanya: 10\n- Tidak suka keduanya: 50 - (20+15+10) = 5\n\nTotal: 20 + 15 + 10 + 5 = 50 ✓\n\nJawaban: C (20)"
+      },
+      
+      // ===== HIMPUNAN - OPERASI =====
+      {
+        id: 26, category: "Himpunan", topic: "Operasi Union",
+        question: "A = {1, 2, 3}\nB = {3, 4, 5}\n\nTentukan A ∪ B (union/gabungan)",
+        options: ["{3}", "{1, 2, 3, 4, 5}", "{1, 2}", "{4, 5}"],
+        answerIndex: 1,
+        explanation: "UNION (∪) = GABUNGAN semua anggota\nTanpa pengulangan!\n\nA ∪ B = Semua anggota A dan B dikumpulkan\n\nA = {1, 2, 3}\nB = {3, 4, 5}\n\nProses:\n- Dari A: 1, 2, 3\n- Dari B: 3 (sudah ada, jangan diulang), 4, 5\n\nHasil: A ∪ B = {1, 2, 3, 4, 5}\n\nPerhatian: Angka 3 hanya ditulis sekali, meskipun muncul di kedua himpunan!\n\nJawaban: B {1, 2, 3, 4, 5}"
+      },
+      {
+        id: 27, category: "Himpunan", topic: "Operasi Intersection",
+        question: "A = {1, 2, 3, 4}\nB = {3, 4, 5, 6}\n\nTentukan A ∩ B (intersection/irisan)",
+        options: ["{3, 4}", "{1, 2, 5, 6}", "{1, 2, 3, 4, 5, 6}", "{ }"],
+        answerIndex: 0,
+        explanation: "INTERSECTION (∩) = IRISAN (anggota yang sama)\nHanya anggota yang ada di KEDUA himpunan!\n\nA = {1, 2, 3, 4}\nB = {3, 4, 5, 6}\n\nCek anggota A:\n- 1: ada di A, tapi tidak di B ✗\n- 2: ada di A, tapi tidak di B ✗\n- 3: ada di A dan di B ✓\n- 4: ada di A dan di B ✓\n\nHanya 3 dan 4 yang ada di kedua himpunan\n\nHasil: A ∩ B = {3, 4}\n\nAnalogi: Irisan = bagian tengah diagram venn yang tumpang tindih\n\nJawaban: A {3, 4}"
+      },
+      {
+        id: 28, category: "Himpunan", topic: "Operasi Complement",
+        question: "U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} (semesta/universal)\nA = {2, 4, 6, 8}\n\nTentukan Aᶜ (komplemen A)",
+        options: ["{2, 4, 6, 8}", "{1, 3, 5, 7, 9, 10}", "{ }", "{1, 2, 3, ..., 10}"],
+        answerIndex: 1,
+        explanation: "KOMPLEMEN (Aᶜ) = Semua anggota SEMESTA yang TIDAK ada di A\n\nU = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10} (semua)\nA = {2, 4, 6, 8} (anggota A)\n\nAᶜ = U - A = Semua anggota U yang bukan anggota A\n\nCek:\n- 1: di U tapi tidak di A → Masuk Aᶜ ✓\n- 2: di A → Tidak masuk Aᶜ ✗\n- 3: di U tapi tidak di A → Masuk Aᶜ ✓\n- ... dst\n\nHasil: Aᶜ = {1, 3, 5, 7, 9, 10}\n\nAndalogi: Komplemen = \"yang tersisa\" atau \"kebalikannya\"\n\nJawaban: B {1, 3, 5, 7, 9, 10}"
+      },
+      {
+        id: 29, category: "Himpunan", topic: "Operasi Difference",
+        question: "A = {1, 2, 3, 4, 5}\nB = {3, 4, 5, 6}\n\nTentukan A - B (selisih: anggota A yang tidak di B)",
+        options: ["{3, 4, 5}", "{1, 2}", "{6}", "{ }"],
+        answerIndex: 1,
+        explanation: "SELISIH (A - B) = Anggota A yang TIDAK ada di B\n\nA = {1, 2, 3, 4, 5}\nB = {3, 4, 5, 6}\n\nCek anggota A:\n- 1: di A tapi tidak di B → Masuk A-B ✓\n- 2: di A tapi tidak di B → Masuk A-B ✓\n- 3: di A dan di B → Tidak masuk A-B ✗\n- 4: di A dan di B → Tidak masuk A-B ✗\n- 5: di A dan di B → Tidak masuk A-B ✗\n\nHasil: A - B = {1, 2}\n\nCara mudah: Ambil anggota A, hilangkan yang ada di B\n\nJawaban: B {1, 2}"
+      },
+      {
+        id: 30, category: "Himpunan", topic: "Operasi Campuran",
+        question: "A = {1, 2, 3}\nB = {2, 3, 4}\nC = {3, 4, 5}\n\nTentukan (A ∪ B) ∩ C",
+        options: ["{3, 4}", "{1, 2, 3, 4}", "{3}", "{1, 2, 3, 4, 5}"],
+        answerIndex: 0,
+        explanation: "OPERASI CAMPURAN = Lakukan operasi berurutan\n\nLangkah 1: Hitung A ∪ B\nA = {1, 2, 3}\nB = {2, 3, 4}\nA ∪ B = {1, 2, 3, 4}\n\nLangkah 2: Hitung (A ∪ B) ∩ C\n(A ∪ B) ∩ C = {1, 2, 3, 4} ∩ {3, 4, 5}\n\nCari anggota yang ada di kedua himpunan:\n- 1: di {1,2,3,4} tapi tidak di C ✗\n- 2: di {1,2,3,4} tapi tidak di C ✗\n- 3: ada di kedua ✓\n- 4: ada di kedua ✓\n\nHasil: (A ∪ B) ∩ C = {3, 4}\n\nTips: Kerjakan dari dalam kurung terlebih dahulu!\n\nJawaban: A {3, 4}"
+      },
+    ];
+    
+    // Quiz State
+    let currentQuestionIndex = 0;
+    let userAnswers = [];
+    let shuffledQuestions = [];
+    let quizStarted = false;
+    let questionCount = 10;
+    let selectedTopic = 'semua';
+    
+    // Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    function toggleMobileMenu(show) {
+      if (show) {
+        mobileMenu.classList.add('open');
+        menuOverlay.classList.remove('hidden');
+      } else {
+        mobileMenu.classList.remove('open');
+        menuOverlay.classList.add('hidden');
+      }
+    }
+    
+    mobileMenuBtn.addEventListener('click', () => toggleMobileMenu(true));
+    closeMenuBtn.addEventListener('click', () => toggleMobileMenu(false));
+    menuOverlay.addEventListener('click', () => toggleMobileMenu(false));
+    navLinks.forEach(link => link.addEventListener('click', () => toggleMobileMenu(false)));
+    
+    // Quiz Functions
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+    
+    function filterQuestions() {
+      let filtered = allQuestions;
+      if (selectedTopic !== 'semua') {
+        filtered = allQuestions.filter(q => q.category.toLowerCase() === selectedTopic);
+      }
+      return filtered;
+    }
+    
+    function startQuiz() {
+      document.getElementById('quiz-start').classList.add('hidden');
+      document.getElementById('quiz-select').classList.remove('hidden');
+    }
+    
+    function goBackToStart() {
+      document.getElementById('quiz-select').classList.add('hidden');
+      document.getElementById('quiz-start').classList.remove('hidden');
+    }
+    
+    function updateTopicButtons() {
+      document.querySelectorAll('.topic-btn').forEach(btn => {
+        const topic = btn.dataset.topic;
+        if (topic === selectedTopic) {
+          btn.classList.add('border-indigo-500', 'bg-indigo-500/20', 'text-indigo-300');
+          btn.classList.remove('border-slate-600', 'text-slate-300', 'hover:border-indigo-500', 'hover:text-indigo-300');
+        } else {
+          btn.classList.remove('border-indigo-500', 'bg-indigo-500/20', 'text-indigo-300');
+          btn.classList.add('border-slate-600', 'text-slate-300', 'hover:border-indigo-500', 'hover:text-indigo-300');
+        }
+      });
+    }
+    
+    function updateQuestionCount(count) {
+      questionCount = Math.max(5, Math.min(25, count));
+      document.getElementById('question-count').value = questionCount;
+      document.getElementById('selected-count').textContent = questionCount;
+      
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        const btnCount = parseInt(btn.dataset.count);
+        if (btnCount === questionCount) {
+          btn.classList.add('border-indigo-500', 'bg-indigo-500/20');
+          btn.classList.remove('border-slate-600');
+        } else {
+          btn.classList.remove('border-indigo-500', 'bg-indigo-500/20');
+          btn.classList.add('border-slate-600');
+        }
+      });
+    }
+    
+    function startSelectedQuiz() {
+      const filtered = filterQuestions();
+      if (filtered.length === 0) {
+        alert('Tidak ada soal untuk topik yang dipilih!');
+        return;
+      }
+      
+      const selectedCount = Math.min(questionCount, filtered.length);
+      shuffledQuestions = shuffleArray(filtered).slice(0, selectedCount);
+      userAnswers = new Array(shuffledQuestions.length).fill(null);
+      currentQuestionIndex = 0;
+      quizStarted = true;
+      
+      document.getElementById('quiz-select').classList.add('hidden');
+      document.getElementById('quiz-question').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      
+      renderQuestion();
+    }
+    
+    function renderQuestion() {
+      const question = shuffledQuestions[currentQuestionIndex];
+      const totalQuestions = shuffledQuestions.length;
+      
+      document.getElementById('quiz-question').scrollTop = 0;
+      
+      document.getElementById('quiz-progress-text').textContent = `Soal ${currentQuestionIndex + 1} dari ${totalQuestions}`;
+      document.getElementById('quiz-progress-bar').style.width = `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`;
+      document.getElementById('quiz-category').textContent = question.topic || question.category;
+      
+      document.getElementById('question-text').textContent = question.question;
+      
+      const optionsContainer = document.getElementById('options-container');
+      const letters = ['A', 'B', 'C', 'D'];
+      const userAnswer = userAnswers[currentQuestionIndex];
+      
+      optionsContainer.innerHTML = question.options.map((option, index) => {
+        let classes = 'option-btn w-full p-4 text-left rounded-xl border transition-all flex items-start gap-3 cursor-pointer';
+        let isSelected = userAnswer === index;
+        let isCorrect = index === question.answerIndex;
+        let isAnswered = userAnswer !== null;
+        
+        if (isAnswered) {
+          if (isCorrect) {
+            classes += ' bg-emerald-500/20 border-emerald-500';
+          } else if (isSelected) {
+            classes += ' bg-red-500/20 border-red-500';
+          } else {
+            classes += ' border-slate-600 opacity-40';
+          }
+        } else {
+          classes += ' border-slate-600 hover:border-indigo-500 hover:bg-slate-700/50';
+        }
+        
+        return `
+          <button class="${classes}" data-index="${index}" ${isAnswered ? 'disabled' : ''}>
+            <span class="flex-shrink-0 w-8 h-8 rounded-lg ${isAnswered && isCorrect ? 'bg-emerald-500' : isAnswered && isSelected ? 'bg-red-500' : 'bg-slate-700'} flex items-center justify-center font-semibold text-sm">
+              ${letters[index]}
+            </span>
+            <span class="pt-0.5">${option}</span>
+          </button>
+        `;
+      }).join('');
+      
+      optionsContainer.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectAnswer(parseInt(btn.dataset.index)));
+      });
+      
+      const explanationContainer = document.getElementById('explanation-container');
+      if (userAnswer !== null) {
+        explanationContainer.classList.remove('hidden');
+        const isCorrect = userAnswer === question.answerIndex;
+        document.getElementById('answer-icon').textContent = isCorrect ? '✅' : '❌';
+        document.getElementById('answer-label').textContent = isCorrect ? 'Benar!' : 'Kurang tepat';
+        document.getElementById('explanation-text').textContent = question.explanation;
+      } else {
+        explanationContainer.classList.add('hidden');
+      }
+      
+      document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+      
+      const nextBtn = document.getElementById('next-btn');
+      if (currentQuestionIndex === totalQuestions - 1) {
+        nextBtn.innerHTML = `Lihat Hasil <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"/></svg>`;
+      } else {
+        nextBtn.innerHTML = `Selanjutnya <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>`;
+      }
+    }
+    
+    function selectAnswer(index) {
+      userAnswers[currentQuestionIndex] = index;
+      renderQuestion();
+    }
+    
+    function nextQuestion() {
+      if (currentQuestionIndex < shuffledQuestions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+    
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+      }
+    }
+    
+    function showResult() {
+      document.getElementById('quiz-question').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
+      let totalCorrect = 0;
+      shuffledQuestions.forEach((q, i) => {
+        if (userAnswers[i] === q.answerIndex) totalCorrect++;
+      });
+      
+      const percentage = Math.round((totalCorrect / shuffledQuestions.length) * 100);
+      const resultIcon = document.getElementById('result-icon');
+      const resultTitle = document.getElementById('result-title');
+      
+      if (percentage >= 80) {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-emerald-500/20';
+        resultIcon.innerHTML = '<span class="text-5xl">🎉</span>';
+        resultTitle.textContent = 'Luar Biasa!';
+      } else if (percentage >= 60) {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-amber-500/20';
+        resultIcon.innerHTML = '<span class="text-5xl">👍</span>';
+        resultTitle.textContent = 'Bagus!';
+      } else {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-indigo-500/20';
+        resultIcon.innerHTML = '<span class="text-5xl">📚</span>';
+        resultTitle.textContent = 'Terus Belajar!';
+      }
+      
+      document.getElementById('result-score').textContent = `${totalCorrect}/${shuffledQuestions.length} (${percentage}%)`;
+      document.getElementById('result-message').textContent = percentage >= 80 ? 'Pemahaman kamu sangat baik!' : 'Coba pelajari ulang materi yang belum dipahami.';
+    }
+    
+    function restartQuiz() {
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-start').classList.remove('hidden');
+      quizStarted = false;
+    }
+    
+    // Event Listeners
+    document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
+    document.getElementById('back-to-start-btn').addEventListener('click', goBackToStart);
+    document.getElementById('start-selected-btn').addEventListener('click', startSelectedQuiz);
+    
+    document.querySelectorAll('.topic-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedTopic = btn.dataset.topic;
+        updateTopicButtons();
+      });
+    });
+    
+    document.getElementById('question-count').addEventListener('input', (e) => {
+      updateQuestionCount(parseInt(e.target.value));
+    });
+    
+    document.getElementById('increase-btn').addEventListener('click', () => {
+      updateQuestionCount(questionCount + 1);
+    });
+    
+    document.getElementById('decrease-btn').addEventListener('click', () => {
+      updateQuestionCount(questionCount - 1);
+    });
+    
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        updateQuestionCount(parseInt(btn.dataset.count));
+      });
+    });
+    
+    document.getElementById('next-btn').addEventListener('click', nextQuestion);
+    document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+    document.getElementById('restart-btn').addEventListener('click', restartQuiz);
+    
+    // Element SDK
+    async function onConfigChange(cfg) {
+      config = { ...defaultConfig, ...cfg };
+      document.getElementById('site-title').textContent = config.site_title;
+      const heroTitle = document.getElementById('hero-title');
+      heroTitle.innerHTML = (config.hero_title || defaultConfig.hero_title).replace('Matematika Diskrit', '<span class="gradient-text">Matematika Diskrit</span>');
+      document.getElementById('hero-subtitle').textContent = config.hero_subtitle;
+    }
+    
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+    
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ["site_title", cfg.site_title || defaultConfig.site_title],
+        ["hero_title", cfg.hero_title || defaultConfig.hero_title],
+        ["hero_subtitle", cfg.hero_subtitle || defaultConfig.hero_subtitle]
+      ]);
+    }
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9caa2228447cf3f2',t:'MTc3MDU0MzI5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
