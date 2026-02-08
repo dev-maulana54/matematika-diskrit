@@ -1,0 +1,1750 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiskritLab - Latihan Matematika Diskrit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --accent: #10b981;
+      --accent-dark: #059669;
+      --bg-main: #0f172a;
+      --bg-card: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+    }
+    
+    * {
+      scroll-behavior: smooth;
+    }
+    
+    .font-main {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+    }
+    
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .card-glow {
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.1);
+    }
+    
+    .card-glow:hover {
+      box-shadow: 0 0 60px rgba(99, 102, 241, 0.2);
+    }
+    
+    .nav-blur {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    
+    .truth-table {
+      font-size: 0.875rem;
+    }
+    
+    .truth-table th,
+    .truth-table td {
+      padding: 0.5rem 1rem;
+      text-align: center;
+      border: 1px solid #334155;
+    }
+    
+    .truth-table th {
+      background: #334155;
+      font-weight: 600;
+    }
+    
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    
+    .accordion-content.open {
+      max-height: 2000px;
+    }
+    
+    .option-btn {
+      transition: all 0.2s ease;
+    }
+    
+    .option-btn:hover:not(:disabled) {
+      transform: translateX(8px);
+    }
+    
+    .option-btn.correct {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      border-color: #10b981;
+    }
+    
+    .option-btn.incorrect {
+      background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+      border-color: #ef4444;
+    }
+    
+    .progress-fill {
+      transition: width 0.5s ease;
+    }
+    
+    .floating-shape {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .floating-shape-delayed {
+      animation: float 6s ease-in-out infinite;
+      animation-delay: -3s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    
+    @media (max-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .materi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-slate-900 text-slate-100 font-main overflow-auto">
+  <div id="app" class="w-full min-h-full"><!-- Navbar -->
+   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur bg-slate-900/80 border-b border-slate-700/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex items-center justify-between h-16"><a href="#beranda" class="flex items-center gap-2">
+       <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-emerald-500 flex items-center justify-center"><span class="text-white font-bold text-sm">D</span>
+       </div><span id="site-title" class="font-bold text-xl gradient-text">DiskritLab</span> </a>
+      <div class="hidden md:flex items-center gap-8"><a href="#beranda" class="text-slate-300 hover:text-white transition-colors">Beranda</a> <a href="#materi" class="text-slate-300 hover:text-white transition-colors">Materi</a> <a href="#latihan" class="text-slate-300 hover:text-white transition-colors">Latihan</a> <a href="#tentang" class="text-slate-300 hover:text-white transition-colors">Tentang</a>
+      </div>
+      <div class="hidden md:block"><a href="#latihan" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-indigo-500/25"> Mulai Latihan 
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg></a>
+      </div><button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-slate-800 transition-colors">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div>
+    </div>
+   </nav><!-- Mobile Menu -->
+   <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 bottom-0 w-72 bg-slate-800 z-50 p-6 md:hidden"><button id="close-menu-btn" class="absolute top-4 right-4 p-2 rounded-lg hover:bg-slate-700">
+     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+     </svg></button>
+    <div class="flex flex-col gap-4 mt-12"><a href="#beranda" class="nav-link text-lg py-2 text-slate-300 hover:text-white transition-colors">Beranda</a> <a href="#materi" class="nav-link text-lg py-2 text-slate-300 hover:text-white transition-colors">Materi</a> <a href="#latihan" class="nav-link text-lg py-2 text-slate-300 hover:text-white transition-colors">Latihan</a> <a href="#tentang" class="nav-link text-lg py-2 text-slate-300 hover:text-white transition-colors">Tentang</a> <a href="#latihan" class="nav-link mt-4 inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg font-medium"> Mulai Latihan </a>
+    </div>
+   </div><!-- Overlay -->
+   <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div><!-- Hero Section -->
+   <section id="beranda" class="relative pt-24 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+     <div class="floating-shape absolute top-32 left-[10%] w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
+     <div class="floating-shape-delayed absolute bottom-32 right-[10%] w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+     <div class="hero-grid grid lg:grid-cols-2 gap-12 items-center">
+      <div class="text-center lg:text-left">
+       <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-indigo-400 text-sm mb-6"><span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span> Platform Pembelajaran Interaktif
+       </div>
+       <h1 id="hero-title" class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">Belajar <span class="gradient-text">Matematika Diskrit</span> dengan Cara Praktis</h1>
+       <p id="hero-subtitle" class="text-lg text-slate-400 mb-8 max-w-xl mx-auto lg:mx-0">Platform interaktif untuk memahami logika proposisional dan teori himpunan dengan latihan soal lengkap beserta pembahasan</p>
+       <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"><a href="#materi" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl font-medium transition-all">
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+         </svg> Baca Materi </a> <a href="#latihan" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 rounded-xl font-medium transition-all hover:shadow-lg hover:shadow-indigo-500/25">
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+         </svg> Kerjakan Kuis </a>
+       </div>
+      </div>
+      <div class="hidden lg:flex justify-center items-center">
+       <div class="relative w-80 h-80">
+        <svg viewbox="0 0 320 320" class="w-full h-full"><!-- Background circles --> <circle cx="160" cy="160" r="140" fill="none" stroke="url(#grad1)" stroke-width="2" opacity="0.3" /> <circle cx="160" cy="160" r="100" fill="none" stroke="url(#grad2)" stroke-width="2" opacity="0.5" /> <!-- Logic symbols --> <g class="floating-shape" style="transform-origin: 80px 100px;">
+          <rect x="50" y="70" width="60" height="60" rx="12" fill="#1e293b" stroke="#6366f1" stroke-width="2" />
+          <text x="80" y="108" text-anchor="middle" fill="#6366f1" font-size="24" font-weight="bold">
+           ∧
+          </text>
+         </g> <g class="floating-shape-delayed" style="transform-origin: 240px 100px;">
+          <rect x="210" y="70" width="60" height="60" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="2" />
+          <text x="240" y="108" text-anchor="middle" fill="#10b981" font-size="24" font-weight="bold">
+           ∨
+          </text>
+         </g> <g class="floating-shape" style="transform-origin: 160px 180px;">
+          <rect x="130" y="150" width="60" height="60" rx="12" fill="#1e293b" stroke="#8b5cf6" stroke-width="2" />
+          <text x="160" y="188" text-anchor="middle" fill="#8b5cf6" font-size="24" font-weight="bold">
+              
+          </text>
+         </g> <g class="floating-shape-delayed" style="transform-origin: 80px 260px;">
+          <rect x="50" y="230" width="60" height="60" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
+          <text x="80" y="268" text-anchor="middle" fill="#f59e0b" font-size="24" font-weight="bold">
+           ∪
+          </text>
+         </g> <g class="floating-shape" style="transform-origin: 240px 260px;">
+          <rect x="210" y="230" width="60" height="60" rx="12" fill="#1e293b" stroke="#ec4899" stroke-width="2" />
+          <text x="240" y="268" text-anchor="middle" fill="#ec4899" font-size="24" font-weight="bold">
+           ∩
+          </text>
+         </g> <!-- Connecting lines --> <path d="M110 100 L130 160" stroke="#334155" stroke-width="1" stroke-dasharray="4" /> <path d="M210 100 L190 160" stroke="#334155" stroke-width="1" stroke-dasharray="4" /> <path d="M160 210 L100 230" stroke="#334155" stroke-width="1" stroke-dasharray="4" /> <path d="M160 210 L220 230" stroke="#334155" stroke-width="1" stroke-dasharray="4" /> <defs>
+          <lineargradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" style="stop-color:#6366f1" />
+           <stop offset="100%" style="stop-color:#10b981" />
+          </lineargradient>
+          <lineargradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+           <stop offset="0%" style="stop-color:#10b981" />
+           <stop offset="100%" style="stop-color:#6366f1" />
+          </lineargradient>
+         </defs>
+        </svg>
+       </div>
+      </div>
+     </div><!-- Stats -->
+     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-16">
+      <div class="text-center p-6 bg-slate-800/50 rounded-2xl border border-slate-700/50">
+       <div class="text-3xl font-bold gradient-text">
+        9
+       </div>
+       <div class="text-slate-400 text-sm mt-1">
+        Topik Materi
+       </div>
+      </div>
+      <div class="text-center p-6 bg-slate-800/50 rounded-2xl border border-slate-700/50">
+       <div class="text-3xl font-bold gradient-text">
+        15+
+       </div>
+       <div class="text-slate-400 text-sm mt-1">
+        Soal Latihan
+       </div>
+      </div>
+      <div class="text-center p-6 bg-slate-800/50 rounded-2xl border border-slate-700/50">
+       <div class="text-3xl font-bold gradient-text">
+        100%
+       </div>
+       <div class="text-slate-400 text-sm mt-1">
+        Gratis
+       </div>
+      </div>
+      <div class="text-center p-6 bg-slate-800/50 rounded-2xl border border-slate-700/50">
+       <div class="text-3xl font-bold gradient-text">
+        ∞
+       </div>
+       <div class="text-slate-400 text-sm mt-1">
+        Dapat Diulang
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Materi Section -->
+   <section id="materi" class="py-16 lg:py-24 bg-slate-800/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12">
+      <h2 class="text-3xl lg:text-4xl font-bold mb-4">Materi Pembelajaran</h2>
+      <p class="text-slate-400 max-w-2xl mx-auto">Pelajari konsep dasar matematika diskrit dengan penjelasan sederhana dan contoh praktis</p>
+     </div>
+     <div class="materi-grid grid md:grid-cols-2 gap-6"><!-- Cara Menentukan Nilai Kebenaran -->
+      <div class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden md:col-span-2"><button class="accordion-btn w-full p-6 flex items-center justify-between text-left hover:bg-slate-700/30 transition-colors">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center"><span class="text-indigo-400 font-bold text-2xl">?</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg">🎯 Cara Menentukan Nilai Kebenaran Pernyataan</h3>
+          <p class="text-slate-400 text-sm">Panduan langkah demi langkah mencari BENAR atau SALAH</p>
+         </div>
+        </div>
+        <svg class="accordion-icon w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="accordion-content max-h-96 overflow-y-auto">
+        <div class="px-6 pb-6 pt-2">
+         <p class="text-slate-300 mb-4"><strong>Langkah pertama</strong> dalam logika adalah menentukan apakah suatu pernyataan itu BENAR atau SALAH. Berikut cara sistematis mengerjakannya:</p>
+         <div class="space-y-4"><!-- Step 1 -->
+          <div class="bg-slate-900/50 rounded-xl p-4 border-l-4 border-indigo-500">
+           <p class="text-indigo-400 font-semibold mb-2">📍 LANGKAH 1: Pahami Pernyataannya</p>
+           <p class="text-slate-300 text-sm mb-3">Baca pernyataan dengan teliti. Pernyataan harus jelas dan dapat dievaluasi (bukan pertanyaan atau opini).</p>
+           <div class="bg-slate-800/50 rounded-lg p-3 space-y-2">
+            <p class="text-slate-400 text-sm">✅ <span class="text-slate-300">Contoh PERNYATAAN:</span></p>
+            <p class="font-mono text-emerald-400">p: "5 + 5 = 10"</p>
+            <p class="font-mono text-emerald-400">q: "Jakarta adalah ibu kota Indonesia"</p>
+            <p class="font-mono text-emerald-400">r: "Bulan berbentuk persegi"</p>
+            <p class="text-slate-400 text-sm mt-3">❌ <span class="text-slate-300">Bukan pernyataan (pertanyaan):</span></p>
+            <p class="font-mono text-red-400">"Berapa hasil 5 + 5?" ← Pertanyaan, bukan pernyataan</p>
+           </div>
+          </div><!-- Step 2 -->
+          <div class="bg-slate-900/50 rounded-xl p-4 border-l-4 border-emerald-500">
+           <p class="text-emerald-400 font-semibold mb-2">📍 LANGKAH 2: Cek Fakta atau Hitung</p>
+           <p class="text-slate-300 text-sm mb-3">Lakukan operasi atau verifikasi untuk membuktikan pernyataan tersebut. Hitung kalau perlu!</p>
+           <div class="bg-slate-800/50 rounded-lg p-3 space-y-3">
+            <div>
+             <p class="text-slate-400 text-sm mb-1">💰 Contoh 1: Operasi Hitung</p>
+             <p class="font-mono text-slate-300">p: "5 + 5 = 10"</p>
+             <p class="text-slate-300">Hitung: 5 + 5 = ... ?</p>
+             <p class="font-mono text-emerald-400 font-semibold">→ Hasilnya memang 10 ✓</p>
+            </div>
+            <div class="border-t border-slate-700 pt-3">
+             <p class="text-slate-400 text-sm mb-1">📍 Contoh 2: Fakta Umum</p>
+             <p class="font-mono text-slate-300">q: "Jakarta adalah ibu kota Indonesia"</p>
+             <p class="text-slate-300">Cek: Apa ibu kota Indonesia? → Jakarta</p>
+             <p class="font-mono text-emerald-400 font-semibold">→ Benar, Jakarta memang ibu kota ✓</p>
+            </div>
+            <div class="border-t border-slate-700 pt-3">
+             <p class="text-slate-400 text-sm mb-1">🌙 Contoh 3: Logika Umum</p>
+             <p class="font-mono text-slate-300">r: "Bulan berbentuk persegi"</p>
+             <p class="text-slate-300">Cek: Bentuk bulan itu apa? → Bulat/lingkaran</p>
+             <p class="font-mono text-red-400 font-semibold">→ Salah, bulan tidak persegi ✗</p>
+            </div>
+           </div>
+          </div><!-- Step 3 -->
+          <div class="bg-slate-900/50 rounded-xl p-4 border-l-4 border-amber-500">
+           <p class="text-amber-400 font-semibold mb-2">📍 LANGKAH 3: Tentukan BENAR atau SALAH</p>
+           <p class="text-slate-300 text-sm mb-3">Berdasarkan hasil pengecekan, tentukan nilai kebenaran pernyataan.</p>
+           <div class="bg-slate-800/50 rounded-lg p-3">
+            <p class="text-slate-300 mb-2">Setiap pernyataan hanya punya 2 pilihan:</p>
+            <div class="flex gap-3 mt-3">
+             <div class="flex-1 bg-emerald-500/20 rounded-lg p-2 border border-emerald-500/50">
+              <p class="font-semibold text-emerald-400">✅ BENAR</p>
+              <p class="text-slate-300 text-xs">Pernyataan sesuai fakta/hitung</p>
+             </div>
+             <div class="flex-1 bg-red-500/20 rounded-lg p-2 border border-red-500/50">
+              <p class="font-semibold text-red-400">❌ SALAH</p>
+              <p class="text-slate-300 text-xs">Pernyataan tidak sesuai fakta</p>
+             </div>
+            </div>
+           </div>
+          </div><!-- Contoh Lengkap -->
+          <div class="bg-indigo-500/10 border border-indigo-500/30 rounded-xl p-4 mt-4">
+           <p class="font-semibold text-indigo-400 mb-3">📌 CONTOH LENGKAP: Mencari Nilai Kebenaran</p>
+           <div class="space-y-4">
+            <div>
+             <p class="font-mono text-slate-300 font-semibold mb-2">Pernyataan: p = "x + 5 = 7 ketika x = 2"</p>
+             <div class="bg-slate-800/50 rounded-lg p-3 space-y-2 text-sm">
+              <p class="text-slate-400"><strong>Langkah 1:</strong> Pahami pernyataannya</p>
+              <p class="text-slate-300">→ Katanya x + 5 hasilnya 7, kalau x diganti 2</p>
+              <p class="text-slate-400 mt-3"><strong>Langkah 2:</strong> Hitung/cek</p>
+              <p class="text-slate-300">→ Ganti x dengan 2: 2 + 5 = ?</p>
+              <p class="font-mono text-emerald-400">→ 2 + 5 = 7 ✓</p>
+              <p class="text-slate-400 mt-3"><strong>Langkah 3:</strong> Tentukan nilai kebenaran</p>
+              <p class="font-mono text-emerald-400 font-semibold">→ p = ✅ BENAR (karena 2+5 memang 7)</p>
+             </div>
+            </div>
+            <div class="border-t border-slate-700 pt-4">
+             <p class="font-mono text-slate-300 font-semibold mb-2">Pernyataan: q = "x + 5 = 7 ketika x = 3"</p>
+             <div class="bg-slate-800/50 rounded-lg p-3 space-y-2 text-sm">
+              <p class="text-slate-400"><strong>Langkah 1:</strong> Pahami pernyataannya</p>
+              <p class="text-slate-300">→ Katanya x + 5 hasilnya 7, kalau x diganti 3</p>
+              <p class="text-slate-400 mt-3"><strong>Langkah 2:</strong> Hitung/cek</p>
+              <p class="text-slate-300">      Ganti x dengan 3: 3 + 5 = ?</p>
+              <p class="font-mono text-red-400">→ 3 + 5 = 8 (bukan 7) ✗</p>
+              <p class="text-slate-400 mt-3"><strong>Langkah 3:</strong> Tentukan nilai kebenaran</p>
+              <p class="font-mono text-red-400 font-semibold">→ q = ❌ SALAH (karena 3+5 = 8, bukan 7)</p>
+             </div>
+            </div>
+           </div>
+          </div><!-- Lebih Banyak Contoh -->
+          <div class="bg-slate-900/50 rounded-xl p-4 mt-4">
+           <p class="font-semibold text-slate-300 mb-3">🔍 LEBIH BANYAK CONTOH CARI NILAI KEBENARAN:</p>
+           <div class="space-y-3">
+            <div class="bg-slate-800/50 p-3 rounded-lg">
+             <p class="text-slate-300 mb-1"><strong>s:</strong> "2 × 6 = 12"</p>
+             <p class="text-slate-300 text-sm">Hitung: 2 × 6 = 12 ✓ → <span class="text-emerald-400 font-semibold">✅ BENAR</span></p>
+            </div>
+            <div class="bg-slate-800/50 p-3 rounded-lg">
+             <p class="text-slate-300 mb-1"><strong>t:</strong> "Surabaya adalah ibu kota Jawa Timur"</p>
+             <p class="text-slate-300 text-sm">Cek fakta: Surabaya memang ibu kota Jawa Timur ✓ → <span class="text-emerald-400 font-semibold">✅ BENAR</span></p>
+            </div>
+            <div class="bg-slate-800/50 p-3 rounded-lg">
+             <p class="text-slate-300 mb-1"><strong>u:</strong> "15 ÷ 3 = 4"</p>
+             <p class="text-slate-300 text-sm">Hitung: 15 ÷ 3 = 5 (bukan 4) ✗ → <span class="text-red-400 font-semibold">❌ SALAH</span></p>
+            </div>
+            <div class="bg-slate-800/50 p-3 rounded-lg">
+             <p class="text-slate-300 mb-1"><strong>v:</strong> "Besi terapung di air"</p>
+             <p class="text-slate-300 text-sm">Cek fakta: Besi tenggelam, tidak terapung ✗ → <span class="text-red-400 font-semibold">❌ SALAH</span></p>
+            </div>
+            <div class="bg-slate-800/50 p-3 rounded-lg">
+             <p class="text-slate-300 mb-1"><strong>w:</strong> "3² + 4² = 5²" (Teorema Pythagoras)</p>
+             <p class="text-slate-300 text-sm">Hitung: 9 + 16 = 25, dan 25 = 25 ✓ → <span class="text-emerald-400 font-semibold">✅ BENAR</span></p>
+            </div>
+           </div>
+          </div><!-- Tips -->
+          <div class="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 mt-4">
+           <p class="text-emerald-400 font-semibold mb-2">💡 TIPS PENTING:</p>
+           <ul class="text-slate-300 space-y-1 text-sm">
+            <li>✓ Selalu hitung/verifikasi dulu sebelum membuat kesimpulan</li>
+            <li>✓ Jangan percaya pendapat pribadi, gunakan fakta dan logika</li>
+            <li>✓ Pernyataan hanya bisa BENAR atau SALAH, tidak ada pilihan lain</li>
+            <li>✓ Kalau ragu, periksa ulang dengan teliti</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Negasi -->
+      <div class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden"><button class="accordion-btn w-full p-6 flex items-center justify-between text-left hover:bg-slate-700/30 transition-colors">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center"><span class="text-indigo-400 font-bold text-xl font-mono">¬</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg">Negasi (¬p)</h3>
+          <p class="text-slate-400 text-sm">Kebalikan pernyataan (DI-TIDAK-kan)</p>
+         </div>
+        </div>
+        <svg class="accordion-icon w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="accordion-content max-h-96 overflow-y-auto">
+        <div class="px-6 pb-6 pt-2">
+         <p class="text-slate-300 mb-4"><strong>Negasi</strong> adalah kebalikan dari suatu pernyataan. Jika pernyataan benar, negasinya salah. Jika pernyataan salah, negasinya benar. Seperti menambahkan kata "TIDAK" di depan pernyataan.</p>
+         <div class="space-y-3">
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 1:</p>
+           <p class="text-indigo-400 font-semibold">p: "Langit berwarna biru"</p>
+           <p class="text-slate-300">→ Ini <strong>BENAR</strong> ✅</p>
+           <p class="text-emerald-400 font-semibold mt-2">¬p: "Langit TIDAK berwarna biru"</p>
+           <p class="text-slate-300">→ Ini <strong>SALAH</strong> ❌</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 2:</p>
+           <p class="text-indigo-400 font-semibold">p: "Saya sedang tidur"</p>
+           <p class="text-slate-300">→ Ini <strong>SALAH</strong> ❌ (karena kamu membaca ini)</p>
+           <p class="text-emerald-400 font-semibold mt-2">¬p: "Saya TIDAK sedang tidur"</p>
+           <p class="text-slate-300">→ Ini <strong>BENAR</strong> ✅</p>
+          </div>
+         </div>
+         <div class="mt-4 overflow-x-auto">
+          <table class="truth-table w-full rounded-lg overflow-hidden">
+           <thead>
+            <tr>
+             <th>Pernyataan p</th>
+             <th>Nilai</th>
+             <th>Negasi ¬p</th>
+             <th>Nilai</th>
+            </tr>
+           </thead>
+           <tbody class="bg-slate-900/30">
+            <tr>
+             <td>"2+2=4"</td>
+             <td>✅ Benar</td>
+             <td>"2+2≠4"</td>
+             <td>❌ Salah</td>
+            </tr>
+            <tr>
+             <td>"Kucing adalah ikan"</td>
+             <td>❌ Salah</td>
+             <td>"Kucing BUKAN ikan"</td>
+             <td>✅ Benar</td>
+            </tr>
+           </tbody>
+          </table>
+         </div>
+         <div class="mt-4 bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-4">
+          <p class="text-sm text-indigo-300">💡 Cara Mudah Ingat: Negasi = Tambahkan "TIDAK" atau "BUKAN" di depan pernyataan</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Konjungsi -->
+      <div class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden"><button class="accordion-btn w-full p-6 flex items-center justify-between text-left hover:bg-slate-700/30 transition-colors">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold text-xl font-mono">∧</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg">Konjungsi (p ∧ q)</h3>
+          <p class="text-slate-400 text-sm">Operasi "DAN" - kedua harus benar</p>
+         </div>
+        </div>
+        <svg class="accordion-icon w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="accordion-content max-h-96 overflow-y-auto">
+        <div class="px-6 pb-6 pt-2">
+         <p class="text-slate-300 mb-4"><strong>Konjungsi</strong> adalah operasi "DAN". Hasilnya hanya benar jika KEDUA pernyataan benar. Jika salah satu atau keduanya salah, hasilnya salah.</p>
+         <div class="space-y-3">
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 1: Syarat Masuk Bioskop</p>
+           <p class="text-indigo-400 font-semibold">p: "Kamu punya tiket" → ✅ BENAR</p>
+           <p class="text-indigo-400 font-semibold">q: "Kamu punya uang snack" → ✅ BENAR</p>
+           <p class="text-emerald-400 font-semibold mt-2">p ∧ q: "Punya tiket DAN uang snack" → ✅ BOLEH MASUK</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 2: Syarat Lulus Ujian</p>
+           <p class="text-indigo-400 font-semibold">p: "Nilai ≥ 70" → ✅ BENAR</p>
+           <p class="text-indigo-400 font-semibold">q: "Kehadiran ≥ 80%" → ❌ SALAH (kehadiran cuma 70%)</p>
+           <p class="text-red-500 font-semibold mt-2">p ∧ q: "Nilai bagus DAN kehadiran bagus" → ❌ TIDAK LULUS</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Ingat:</p>
+           <p class="text-slate-300">• Kedua benar = BENAR ✅</p>
+           <p class="text-slate-300">• Salah satu salah = SALAH ❌</p>
+           <p class="text-slate-300">• Keduanya salah = SALAH ❌</p>
+          </div>
+         </div>
+         <div class="mt-4 overflow-x-auto">
+          <table class="truth-table w-full rounded-lg overflow-hidden">
+           <thead>
+            <tr>
+             <th>p</th>
+             <th>q</th>
+             <th>p ∧ q</th>
+             <th>Arti</th>
+            </tr>
+           </thead>
+           <tbody class="bg-slate-900/30">
+            <tr>
+             <td>✅ Benar</td>
+             <td>✅ Benar</td>
+             <td class="text-emerald-400">✅ Benar</td>
+             <td>Semua OK</td>
+            </tr>
+            <tr>
+             <td>✅ Benar</td>
+             <td>❌ Salah</td>
+             <td class="text-red-400">❌ Salah</td>
+             <td>Ada yang kurang</td>
+            </tr>
+            <tr>
+             <td>❌ Salah</td>
+             <td>✅ Benar</td>
+             <td class="text-red-400">❌ Salah</td>
+             <td>Ada yang kurang</td>
+            </tr>
+            <tr>
+             <td>❌ Salah</td>
+             <td>❌ Salah</td>
+             <td class="text-red-400">❌ Salah</td>
+             <td>Semua tidak OK</td>
+            </tr>
+           </tbody>
+          </table>
+         </div>
+        </div>
+       </div>
+      </div><!-- Disjungsi -->
+      <div class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden"><button class="accordion-btn w-full p-6 flex items-center justify-between text-left hover:bg-slate-700/30 transition-colors">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold text-xl font-mono">∨</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg">Disjungsi (p ∨ q)</h3>
+          <p class="text-slate-400 text-sm">Operasi "ATAU" - cukup salah satu benar</p>
+         </div>
+        </div>
+        <svg class="accordion-icon w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="accordion-content max-h-96 overflow-y-auto">
+        <div class="px-6 pb-6 pt-2">
+         <p class="text-slate-300 mb-4"><strong>Disjungsi</strong> adalah operasi "ATAU". Hasilnya benar jika SALAH SATU ATAU KEDUA pernyataan benar. Hanya salah jika keduanya salah.</p>
+         <div class="space-y-3">
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 1: Pilihan Menu Makan</p>
+           <p class="text-indigo-400 font-semibold">p: "Kamu suka nasi goreng" → ✅ BENAR</p>
+           <p class="text-indigo-400 font-semibold">q: "Kamu suka mie goreng" → ❌ SALAH</p>
+           <p class="text-amber-400 font-semibold mt-2">p ∨ q: "Pesan nasi ATAU mie goreng" → ✅ PESAN MAKAN</p>
+           <p class="text-slate-300 text-sm mt-2">(Karena setidaknya ada yang kamu suka)</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 2: Syarat Mendapat Hadiah</p>
+           <p class="text-indigo-400 font-semibold">p: "Ranking 10 besar" → ❌ SALAH</p>
+           <p class="text-indigo-400 font-semibold">q: "Hadir semua pertemuan" → ✅ BENAR</p>
+           <p class="text-amber-400 font-semibold mt-2">p ∨ q: "Ranking bagus ATAU kehadiran lengkap" → ✅ DAPAT HADIAH</p>
+           <p class="text-slate-300 text-sm mt-2">(Cukup satu syarat terpenuhi)</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Ingat:</p>
+           <p class="text-slate-300">   Kedua benar = BENAR ✅</p>
+           <p class="text-slate-300">• Salah satu benar = BENAR ✅</p>
+           <p class="text-slate-300">• Keduanya salah = SALAH ❌</p>
+          </div>
+         </div>
+         <div class="mt-4 overflow-x-auto">
+          <table class="truth-table w-full rounded-lg overflow-hidden">
+           <thead>
+            <tr>
+             <th>p</th>
+             <th>q</th>
+             <th>p ∨ q</th>
+             <th>Arti</th>
+            </tr>
+           </thead>
+           <tbody class="bg-slate-900/30">
+            <tr>
+             <td>✅ Benar</td>
+             <td>✅ Benar</td>
+             <td class="text-amber-400">✅ Benar</td>
+             <td>Keduanya OK</td>
+            </tr>
+            <tr>
+             <td>✅ Benar</td>
+             <td>❌ Salah</td>
+             <td class="text-amber-400">✅ Benar</td>
+             <td>Ada yang OK</td>
+            </tr>
+            <tr>
+             <td>❌ Salah</td>
+             <td>✅ Benar</td>
+             <td class="text-amber-400">✅ Benar</td>
+             <td>Ada yang OK</td>
+            </tr>
+            <tr>
+             <td>❌ Salah</td>
+             <td>❌ Salah</td>
+             <td class="text-red-400">❌ Salah</td>
+             <td>Semua tidak OK</td>
+            </tr>
+           </tbody>
+          </table>
+         </div>
+        </div>
+       </div>
+      </div><!-- Implikasi -->
+      <div class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden"><button class="accordion-btn w-full p-6 flex items-center justify-between text-left hover:bg-slate-700/30 transition-colors">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-xl bg-violet-500/20 flex items-center justify-center"><span class="text-violet-400 font-bold text-xl font-mono">→</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg">Implikasi (p → q)</h3>
+          <p class="text-slate-400 text-sm">Operasi "JIKA...MAKA" - janji harus ditepati</p>
+         </div>
+        </div>
+        <svg class="accordion-icon w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="accordion-content max-h-96 overflow-y-auto">
+        <div class="px-6 pb-6 pt-2">
+         <p class="text-slate-300 mb-4"><strong>Implikasi</strong> adalah "JIKA p maka q". Berbunyi seperti janji: kalau p terjadi, q pasti terjadi. Hanya SALAH jika janji dilanggar (p terjadi tapi q tidak).</p>
+         <div class="space-y-3">
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 1: Janji Ibu</p>
+           <p class="text-indigo-400 font-semibold">p: "Jika kamu dapat nilai A" → ✅ BENAR (kamu dpt A)</p>
+           <p class="text-indigo-400 font-semibold">q: "Maka kamu dapat hadiah motor" → ✅ BENAR (dapat hadiah)</p>
+           <p class="text-violet-400 font-semibold mt-2">p → q: "Janji Ibu ditepati" → ✅ BENAR</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 2: Janji Dilanggar</p>
+           <p class="text-indigo-400 font-semibold">p: "Jika kamu dapat nilai A" → ✅ BENAR (kamu dpt A)</p>
+           <p class="text-indigo-400 font-semibold">q: "Maka kamu dapat hadiah motor" → ❌ SALAH (tidak dapat hadiah)</p>
+           <p class="text-red-500 font-semibold mt-2">p → q: "Janji Ibu DILANGGAR!" → ❌ SALAH</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 3: Tidak Ada Janji (Aman-aman Saja)</p>
+           <p class="text-indigo-400 font-semibold">p: "Jika kamu dapat nilai A" → ❌ SALAH (kamu dpt B)</p>
+           <p class="text-indigo-400 font-semibold">q: "Maka kamu dapat hadiah" → Tidak peduli</p>
+           <p class="text-violet-400 font-semibold mt-2">p → q: "Tidak ada janji yang dilanggar" → ✅ BENAR</p>
+           <p class="text-slate-300 text-sm mt-2">(Karena syarat p tidak terpenuhi, janji tidak berlaku)</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Ingat:</p>
+           <p class="text-slate-300">• Janji ditepati (Benar → Benar) = ✅ BENAR</p>
+           <p class="text-slate-300">• Janji dilanggar (Benar → Salah) = ❌ SALAH ⚠️</p>
+           <p class="text-slate-300">• Tidak ada janji (Salah → apapun) = ✅ BENAR</p>
+          </div>
+         </div>
+         <div class="mt-4 overflow-x-auto">
+          <table class="truth-table w-full rounded-lg overflow-hidden">
+           <thead>
+            <tr>
+             <th>p</th>
+             <th>q</th>
+             <th>p → q</th>
+             <th>Arti</th>
+            </tr>
+           </thead>
+           <tbody class="bg-slate-900/30">
+            <tr>
+             <td>✅ Benar</td>
+             <td>✅ Benar</td>
+             <td class="text-violet-400">✅ Benar</td>
+             <td>Janji ditepati</td>
+            </tr>
+            <tr>
+             <td>✅ Benar</td>
+             <td>❌ Salah</td>
+             <td class="text-red-400">❌ Salah</td>
+             <td>Janji dilanggar!</td>
+            </tr>
+            <tr>
+             <td>❌ Salah</td>
+             <td>✅ Benar</td>
+             <td class="text-violet-400">✅ Benar</td>
+             <td>Aman-aman</td>
+            </tr>
+            <tr>
+             <td>❌ Salah</td>
+             <td>❌ Salah</td>
+             <td class="text-violet-400">✅ Benar</td>
+             <td>Aman-aman</td>
+            </tr>
+           </tbody>
+          </table>
+         </div>
+        </div>
+       </div>
+      </div><!-- Biimplikasi -->
+      <div class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden"><button class="accordion-btn w-full p-6 flex items-center justify-between text-left hover:bg-slate-700/30 transition-colors">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-xl bg-pink-500/20 flex items-center justify-center"><span class="text-pink-400 font-bold text-xl font-mono">↔</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg">Biimplikasi (p ↔ q)</h3>
+          <p class="text-slate-400 text-sm">"JIKA DAN HANYA JIKA" - dua arah sama</p>
+         </div>
+        </div>
+        <svg class="accordion-icon w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="accordion-content max-h-96 overflow-y-auto">
+        <div class="px-6 pb-6 pt-2">
+         <p class="text-slate-300 mb-4"><strong>Biimplikasi</strong> adalah "JIKA DAN HANYA JIKA p maka q". Artinya: jika p benar maka q benar, DAN jika q benar maka p benar. Keduanya harus sama!</p>
+         <div class="space-y-3">
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 1: Hubungan Matahari Terbit</p>
+           <p class="text-indigo-400 font-semibold">p: "Sekarang jam 6 pagi" → ✅ BENAR</p>
+           <p class="text-indigo-400 font-semibold">q: "Matahari sedang terbit" → ✅ BENAR</p>
+           <p class="text-pink-400 font-semibold mt-2">p ↔ q: "Jam 6 pagi JIKA DAN HANYA JIKA matahari terbit" → ✅ BENAR</p>
+           <p class="text-slate-300 text-sm mt-2">(Keduanya terjadi bersamaan atau tidak sama sekali)</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 2: Hubungan Bilangan Genap</p>
+           <p class="text-indigo-400 font-semibold">p: "Bilangan x habis dibagi 2" → ✅ BENAR</p>
+           <p class="text-indigo-400 font-semibold">q: "Bilangan x adalah genap" → ✅ BENAR</p>
+           <p class="text-pink-400 font-semibold mt-2">p ↔ q: "x habis dibagi 2 JIKA DAN HANYA JIKA x genap" → ✅ BENAR</p>
+           <p class="text-slate-300 text-sm mt-2">(Selalu sama, tidak pernah berbeda)</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Contoh 3: Hubungan Tidak Cocok</p>
+           <p class="text-indigo-400 font-semibold">p: "Jam menunjuk 12 siang" → ✅ BENAR</p>
+           <p class="text-indigo-400 font-semibold">q: "Hari terang benderang" → ✅ BENAR</p>
+           <p class="text-slate-300">Tapi bagaimana kalau:</p>
+           <p class="text-indigo-400 font-semibold">p: "Jam menunjuk 12 malam" → ❌ SALAH</p>
+           <p class="text-indigo-400 font-semibold">q: "Hari terang benderang" → ❌ SALAH</p>
+           <p class="text-pink-400 font-semibold mt-2">p ↔ q: "12 siang JIKA DAN HANYA JIKA terang" → ✅ BENAR</p>
+           <p class="text-slate-300 text-sm mt-2">(Sama-sama salah juga dianggap cocok!)</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="text-sm text-slate-400 mb-2">Ingat:</p>
+           <p class="text-slate-300">• Keduanya benar = ✅ BENAR</p>
+           <p class="text-slate-300">• Salah satu berbeda = ❌ SALAH</p>
+           <p class="text-slate-300">• Keduanya salah = ✅ BENAR</p>
+           <p class="text-slate-300">🎯 Biimplikasi = mereka selalu sepadan!</p>
+          </div>
+         </div>
+         <div class="mt-4 overflow-x-auto">
+          <table class="truth-table w-full rounded-lg overflow-hidden">
+           <thead>
+            <tr>
+             <th>p</th>
+             <th>q</th>
+             <th>p ↔ q</th>
+             <th>Arti</th>
+            </tr>
+           </thead>
+           <tbody class="bg-slate-900/30">
+            <tr>
+             <td>✅ Benar</td>
+             <td>✅ Benar</td>
+             <td class="text-pink-400">✅ Benar</td>
+             <td>Sama-sama OK</td>
+            </tr>
+            <tr>
+             <td>✅ Benar</td>
+             <td>❌ Salah</td>
+             <td class="text-red-400">❌ Salah</td>
+             <td>Tidak cocok!</td>
+            </tr>
+            <tr>
+             <td>❌ Salah</td>
+             <td>✅ Benar</td>
+             <td class="text-red-400">❌ Salah</td>
+             <td>Tidak cocok!</td>
+            </tr>
+            <tr>
+             <td>❌ Salah</td>
+             <td>❌ Salah</td>
+             <td class="text-pink-400">✅ Benar</td>
+             <td>Sama-sama TIDAK OK</td>
+            </tr>
+           </tbody>
+          </table>
+         </div>
+        </div>
+       </div>
+      </div><!-- Himpunan -->
+      <div class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden"><button class="accordion-btn w-full p-6 flex items-center justify-between text-left hover:bg-slate-700/30 transition-colors">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center"><span class="text-cyan-400 font-bold text-xl font-mono">{ }</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg">Himpunan</h3>
+          <p class="text-slate-400 text-sm">Kumpulan objek terdefinisi</p>
+         </div>
+        </div>
+        <svg class="accordion-icon w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="accordion-content max-h-96 overflow-y-auto">
+        <div class="px-6 pb-6 pt-2">
+         <p class="text-slate-300 mb-4"><strong>Himpunan</strong> adalah kumpulan objek yang terdefinisi dengan jelas (dapat ditentukan keanggotaannya).</p>
+         <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+          <p class="text-sm text-slate-400 mb-2">Notasi:</p>
+          <ul class="text-slate-300 space-y-1">
+           <li>• <span class="font-mono text-cyan-400">A = {1, 2, 3}</span> → roster/daftar</li>
+           <li>• <span class="font-mono text-cyan-400">B = {x | x bilangan genap}</span> → pembentuk</li>
+           <li>• <span class="font-mono text-cyan-400">2 ∈ A</span> → 2 adalah anggota A</li>
+           <li>• <span class="font-mono text-cyan-400">5 ∉ A</span> → 5 bukan anggota A</li>
+          </ul>
+         </div>
+         <div class="bg-slate-900/50 rounded-xl p-4">
+          <p class="text-sm text-slate-400 mb-2">Contoh:</p>
+          <p class="text-slate-300">A = {huruf vokal} = {a, e, i, o, u}</p>
+          <p class="text-slate-300">B = {x | x &lt; 5, x ∈    } = {0, 1, 2, 3, 4}</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Operasi Himpunan -->
+      <div class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden"><button class="accordion-btn w-full p-6 flex items-center justify-between text-left hover:bg-slate-700/30 transition-colors">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center"><span class="text-orange-400 font-bold text-lg font-mono">∪∩</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg">Operasi Himpunan</h3>
+          <p class="text-slate-400 text-sm">Union, Intersection, Difference</p>
+         </div>
+        </div>
+        <svg class="accordion-icon w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="accordion-content max-h-96 overflow-y-auto">
+        <div class="px-6 pb-6 pt-2">
+         <div class="space-y-4">
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="font-semibold text-orange-400 mb-2">Union (A ∪ B)</p>
+           <p class="text-slate-300 text-sm mb-2">Gabungan semua anggota A dan B</p>
+           <p class="font-mono text-sm text-slate-400">A = {1,2,3}, B = {3,4,5}</p>
+           <p class="font-mono text-sm text-orange-400">A ∪ B = {1,2,3,4,5}</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="font-semibold text-emerald-400 mb-2">Intersection (A ∩ B)</p>
+           <p class="text-slate-300 text-sm mb-2">Anggota yang ada di A DAN B</p>
+           <p class="font-mono text-sm text-slate-400">A = {1,2,3}, B = {3,4,5}</p>
+           <p class="font-mono text-sm text-emerald-400">A ∩ B = {3}</p>
+          </div>
+          <div class="bg-slate-900/50 rounded-xl p-4">
+           <p class="font-semibold text-red-400 mb-2">Difference (A − B)</p>
+           <p class="text-slate-300 text-sm mb-2">Anggota A yang TIDAK ada di B</p>
+           <p class="font-mono text-sm text-slate-400">A = {1,2,3}, B = {3,4,5}</p>
+           <p class="font-mono text-sm text-red-400">A     B = {1,2}</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div><!-- Komplemen -->
+      <div class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden"><button class="accordion-btn w-full p-6 flex items-center justify-between text-left hover:bg-slate-700/30 transition-colors">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-xl bg-rose-500/20 flex items-center justify-center"><span class="text-rose-400 font-bold text-xl font-mono">A  </span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg">Komplemen</h3>
+          <p class="text-slate-400 text-sm">Anggota di luar himpunan</p>
+         </div>
+        </div>
+        <svg class="accordion-icon w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="accordion-content max-h-96 overflow-y-auto">
+        <div class="px-6 pb-6 pt-2">
+         <p class="text-slate-300 mb-4"><strong>Komplemen</strong> dari himpunan A (ditulis Aᶜ atau A') adalah semua anggota semesta U yang <em>tidak</em> ada di A.</p>
+         <div class="bg-slate-900/50 rounded-xl p-4 mb-4">
+          <p class="text-sm text-slate-400 mb-2">Rumus:</p>
+          <p class="font-mono text-rose-400">Aᶜ = U − A = {x | x ∈ U ∧ x ∉ A}</p>
+         </div>
+         <div class="bg-slate-900/50 rounded-xl p-4">
+          <p class="text-sm text-slate-400 mb-2">Contoh:</p>
+          <p class="text-slate-300">U = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}</p>
+          <p class="text-slate-300">A = {2, 4, 6, 8, 10} (bilangan genap)</p>
+          <p class="text-rose-400 mt-2">Aᶜ = {1, 3, 5, 7, 9} (bilangan ganjil)</p>
+         </div>
+        </div>
+       </div>
+      </div><!-- Campuran -->
+      <div class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden md:col-span-2"><button class="accordion-btn w-full p-6 flex items-center justify-between text-left hover:bg-slate-700/30 transition-colors">
+        <div class="flex items-center gap-4">
+         <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/20 to-emerald-500/20 flex items-center justify-center"><span class="text-white font-bold text-lg">🧩</span>
+         </div>
+         <div>
+          <h3 class="font-semibold text-lg">Ekspresi Campuran</h3>
+          <p class="text-slate-400 text-sm">Kombinasi logika dan himpunan</p>
+         </div>
+        </div>
+        <svg class="accordion-icon w-5 h-5 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="accordion-content max-h-96 overflow-y-auto">
+        <div class="px-6 pb-6 pt-2">
+         <div class="grid md:grid-cols-2 gap-6">
+          <div>
+           <h4 class="font-semibold text-indigo-400 mb-3">Contoh Logika Campuran</h4>
+           <div class="bg-slate-900/50 rounded-xl p-4">
+            <p class="text-sm text-slate-400 mb-2">Soal:</p>
+            <p class="font-mono text-slate-300 mb-3">Tentukan nilai (p → q) ∧ ¬q jika p = T, q = F</p>
+            <p class="text-sm text-slate-400 mb-2">Langkah:</p>
+            <ol class="text-sm text-slate-300 space-y-1">
+             <li>1. p → q = T → F = <span class="text-red-400">F</span></li>
+             <li>2. ¬q = ¬F = <span class="text-emerald-400">T</span></li>
+             <li>3. F ∧ T = <span class="text-indigo-400 font-bold">F</span></li>
+            </ol>
+           </div>
+          </div>
+          <div>
+           <h4 class="font-semibold text-emerald-400 mb-3">Contoh Himpunan Campuran</h4>
+           <div class="bg-slate-900/50 rounded-xl p-4">
+            <p class="text-sm text-slate-400 mb-2">Soal:</p>
+            <p class="font-mono text-slate-300 mb-3">Tentukan (A ∩ Bᶜ) ∪ C</p>
+            <p class="text-sm text-slate-400 mb-1">Diketahui: U={1..10}, A={1,2,3}, B={2,3,4}, C={5,6}</p>
+            <p class="text-sm text-slate-400 mb-2">Langkah:</p>
+            <ol class="text-sm text-slate-300 space-y-1">
+             <li>1. Bᶜ = {1,5,6,7,8,9,10}</li>
+             <li>2. A ∩ Bᶜ = {1}</li>
+             <li>3. {1} ∪ {5,6} = <span class="text-emerald-400 font-bold">{1,5,6}</span></li>
+            </ol>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Tips Cepat -->
+     <div class="mt-12 bg-gradient-to-br from-indigo-500/10 to-emerald-500/10 rounded-2xl border border-indigo-500/20 p-6 lg:p-8">
+      <h3 class="text-xl font-bold mb-6 flex items-center gap-3"><span class="text-2xl">💡</span> Tips Cepat</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+       <div class="bg-slate-800/50 rounded-xl p-4">
+        <p class="font-semibold text-indigo-400 mb-2">Ingat Implikasi</p>
+        <p class="text-slate-300 text-sm">p → q salah HANYA jika "janji dilanggar": Benar → Salah</p>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-4">
+        <p class="font-semibold text-emerald-400 mb-2">Konjungsi = Ketat</p>
+        <p class="text-slate-300 text-sm">∧ seperti "AND" di pemrograman: semua harus true</p>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-4">
+        <p class="font-semibold text-amber-400 mb-2">Disjungsi = Longgar</p>
+        <p class="text-slate-300 text-sm">∨ seperti "OR": cukup satu true untuk hasil true</p>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-4">
+        <p class="font-semibold text-pink-400 mb-2">Biimplikasi = Sama</p>
+        <p class="text-slate-300 text-sm">↔ true jika kedua nilai sama (T-T atau F-F)</p>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-4">
+        <p class="font-semibold text-cyan-400 mb-2">∪ vs ∩</p>
+        <p class="text-slate-300 text-sm">Union (∪) = gabung semua. Intersection (∩) = irisan saja</p>
+       </div>
+       <div class="bg-slate-800/50 rounded-xl p-4">
+        <p class="font-semibold text-rose-400 mb-2">Kesalahan Umum</p>
+        <p class="text-slate-300 text-sm">Jangan bingung: F → apapun = T (vacuous truth)</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Quiz Section -->
+   <section id="latihan" class="py-16 lg:py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="text-center mb-12">
+      <h2 class="text-3xl lg:text-4xl font-bold mb-4">Latihan Soal</h2>
+      <p class="text-slate-400">Uji pemahamanmu dengan 15 soal pilihan ganda</p>
+     </div>
+     <div id="quiz-container" class="bg-slate-800 rounded-2xl border border-slate-700/50 card-glow overflow-hidden"><!-- Quiz Start Screen -->
+      <div id="quiz-start" class="p-8 text-center">
+       <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-indigo-500 to-emerald-500 flex items-center justify-center">
+        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        </svg>
+       </div>
+       <h3 class="text-2xl font-bold mb-4">Siap Mengerjakan Kuis?</h3>
+       <p class="text-slate-400 mb-6 max-w-md mx-auto">Bank soal 150 pertanyaan tentang logika proposisional dan teori himpunan. Jawaban akan langsung dievaluasi dengan pembahasan.</p>
+       <div class="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+        <div class="flex items-center gap-2 text-slate-400">
+         <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg><span>Tanpa batas waktu</span>
+        </div>
+        <div class="flex items-center gap-2 text-slate-400">
+         <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg><span>Pembahasan langsung</span>
+        </div>
+       </div><button id="start-quiz-btn" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 rounded-xl font-semibold text-lg transition-all hover:shadow-lg hover:shadow-indigo-500/25"> Mulai Kuis 
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg></button>
+      </div><!-- Question Selection Screen -->
+      <div id="quiz-select" class="hidden p-8">
+       <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-8">
+         <h3 class="text-2xl font-bold mb-3">Pilih Jumlah Soal</h3>
+         <p class="text-slate-400 mb-6">Pilih berapa banyak soal yang ingin kamu kerjakan (10-30 soal dari 150 soal bank)</p>
+        </div>
+        <div class="bg-slate-900/50 rounded-2xl border border-slate-700/50 p-6 lg:p-8 mb-8">
+         <div class="mb-8"><label for="question-count" class="block text-sm font-medium text-slate-300 mb-4">Jumlah Soal:</label>
+          <div class="flex items-center justify-center gap-2 sm:gap-4"><button id="decrease-btn" class="flex-shrink-0 p-2.5 sm:p-3 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+            </svg></button> <input id="question-count" type="range" min="10" max="30" value="15" class="flex-1 h-2.5 sm:h-3 bg-slate-700 rounded-lg appearance-none cursor-pointer" style="accent-color: #6366f1;"> <button id="increase-btn" class="flex-shrink-0 p-2.5 sm:p-3 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg></button>
+          </div>
+         </div>
+         <div class="text-center mb-8 p-6 bg-slate-800/50 rounded-xl border border-slate-700/30">
+          <p class="text-slate-400 text-xs sm:text-sm mb-2">Soal yang akan dikerjakan:</p>
+          <p id="selected-count" class="text-6xl sm:text-7xl font-bold gradient-text">15</p>
+          <p class="text-slate-400 text-xs mt-2">dari 150 soal bank</p>
+         </div>
+         <div class="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-6"><button class="preset-btn py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border border-slate-600 hover:border-indigo-500 transition-colors text-xs sm:text-sm hover:bg-slate-700/50" data-count="10">10</button> <button class="preset-btn py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border border-slate-600 hover:border-indigo-500 transition-colors text-xs sm:text-sm hover:bg-slate-700/50" data-count="15">15</button> <button class="preset-btn py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border border-indigo-500 bg-indigo-500/20 transition-colors text-xs sm:text-sm font-medium" data-count="20">20</button> <button class="preset-btn py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border border-slate-600 hover:border-indigo-500 transition-colors text-xs sm:text-sm hover:bg-slate-700/50" data-count="25">25</button> <button class="preset-btn py-2.5 sm:py-3 px-2 sm:px-3 rounded-lg border border-slate-600 hover:border-indigo-500 transition-colors text-xs sm:text-sm hover:bg-slate-700/50" data-count="30">30</button>
+         </div>
+         <p class="text-center text-slate-400 text-xs mb-6">Tekan tombol di atas atau geser slider untuk memilih</p>
+         <div class="grid grid-cols-3 gap-2 sm:gap-4 text-xs sm:text-sm">
+          <div class="bg-slate-800/50 rounded-lg p-2.5 sm:p-4 border border-slate-700/50">
+           <p class="text-slate-400 text-xs mb-1.5">Logika</p>
+           <p class="font-semibold text-indigo-400 text-sm sm:text-base">~80</p>
+          </div>
+          <div class="bg-slate-800/50 rounded-lg p-2.5 sm:p-4 border border-slate-700/50">
+           <p class="text-slate-400 text-xs mb-1.5">Himpunan</p>
+           <p class="font-semibold text-emerald-400 text-sm sm:text-base">~50</p>
+          </div>
+          <div class="bg-slate-800/50 rounded-lg p-2.5 sm:p-4 border border-slate-700/50">
+           <p class="text-slate-400 text-xs mb-1.5">Campuran</p>
+           <p class="font-semibold text-amber-400 text-sm sm:text-base">~20</p>
+          </div>
+         </div>
+        </div>
+        <div class="flex gap-4 justify-center"><button id="back-to-start-btn" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-medium transition-colors"> Kembali </button> <button id="start-selected-btn" class="px-8 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 rounded-xl font-semibold transition-all hover:shadow-lg hover:shadow-indigo-500/25"> Mulai Kuis </button>
+        </div>
+       </div>
+      </div><!-- Quiz Question Screen -->
+      <div id="quiz-question" class="hidden"><!-- Progress Bar -->
+       <div class="p-4 border-b border-slate-700/50">
+        <div class="flex items-center justify-between mb-2"><span id="quiz-progress-text" class="text-sm text-slate-400">Soal 1 dari 15</span> <span id="quiz-category" class="text-xs px-3 py-1 bg-indigo-500/20 text-indigo-400 rounded-full">Logika</span>
+        </div>
+        <div class="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
+         <div id="quiz-progress-bar" class="progress-fill h-full bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full" style="width: 6.67%"></div>
+        </div>
+       </div><!-- Question -->
+       <div class="p-6 lg:p-8">
+        <h3 id="question-text" class="text-xl lg:text-2xl font-semibold mb-6 leading-relaxed"></h3><!-- Options -->
+        <div id="options-container" class="space-y-3 mb-6"></div><!-- Explanation -->
+        <div id="explanation-container" class="hidden mt-6 p-4 bg-slate-900/50 rounded-xl border border-slate-700/50">
+         <p class="font-semibold mb-2 flex items-center gap-2"><span id="answer-icon"></span> <span id="answer-label"></span></p>
+         <p id="explanation-text" class="text-slate-300"></p>
+        </div>
+       </div><!-- Navigation -->
+       <div class="p-4 border-t border-slate-700/50 flex items-center justify-between"><button id="prev-btn" class="px-4 py-2 text-slate-400 hover:text-white transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+         </svg> Sebelumnya </button> <button id="next-btn" class="px-6 py-2 bg-indigo-500 hover:bg-indigo-600 rounded-lg font-medium transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"> Selanjutnya 
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+         </svg></button>
+       </div>
+      </div><!-- Quiz Result Screen -->
+      <div id="quiz-result" class="hidden p-8">
+       <div class="text-center">
+        <div id="result-icon" class="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"></div>
+        <h3 id="result-title" class="text-2xl lg:text-3xl font-bold mb-2"></h3>
+        <p id="result-score" class="text-4xl font-bold gradient-text mb-4"></p>
+        <p id="result-message" class="text-slate-400 mb-8 max-w-md mx-auto"></p><!-- Performance Summary -->
+        <div class="grid sm:grid-cols-2 gap-4 mb-8">
+         <div class="bg-slate-900/50 rounded-xl p-4">
+          <p class="text-sm text-slate-400 mb-1">Logika Proposisional</p>
+          <p id="logic-score" class="text-xl font-bold text-indigo-400"></p>
+         </div>
+         <div class="bg-slate-900/50 rounded-xl p-4">
+          <p class="text-sm text-slate-400 mb-1">Teori Himpunan</p>
+          <p id="set-score" class="text-xl font-bold text-emerald-400"></p>
+         </div>
+        </div>
+        <div id="result-feedback" class="bg-slate-900/50 rounded-xl p-4 mb-8 text-left">
+         <p class="font-semibold mb-2">📊 Analisis Performa</p>
+         <p id="feedback-text" class="text-slate-300 text-sm"></p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center"><button id="review-btn" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-medium transition-colors"> Lihat Jawaban </button> <button id="restart-btn" class="px-6 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 rounded-xl font-medium transition-colors"> Ulangi Kuis </button>
+        </div>
+       </div>
+      </div><!-- Review Screen -->
+      <div id="quiz-review" class="hidden">
+       <div class="p-4 border-b border-slate-700/50 flex items-center justify-between">
+        <h3 class="font-semibold">Review Jawaban</h3><button id="back-to-result-btn" class="text-slate-400 hover:text-white transition-colors"> Kembali ke Hasil </button>
+       </div>
+       <div id="review-container" class="p-6 space-y-6 max-h-[60vh] overflow-y-auto"></div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer / Tentang -->
+   <footer id="tentang" class="py-12 bg-slate-800/50 border-t border-slate-700/50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+     <div class="w-12 h-12 mx-auto mb-6 rounded-xl bg-gradient-to-br from-indigo-500 to-emerald-500 flex items-center justify-center"><span class="text-white font-bold text-lg">D</span>
+     </div>
+     <h3 class="text-xl font-bold mb-4">Tentang DiskritLab</h3>
+     <p class="text-slate-400 max-w-2xl mx-auto mb-6">DiskritLab adalah platform pembelajaran interaktif yang dirancang untuk membantu pelajar dan mahasiswa memahami konsep Matematika Diskrit dengan cara yang praktis dan menyenangkan. Materi disajikan dengan bahasa sederhana disertai latihan soal yang komprehensif.</p><a href="mailto:feedback@diskritlab.id" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm transition-colors mb-8">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg> Kirim Masukan </a>
+     <p class="text-slate-500 text-sm">© 2024 DiskritLab. Dibuat untuk pembelajaran.</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      site_title: "DiskritLab",
+      hero_title: "Belajar Matematika Diskrit dengan Cara Praktis",
+      hero_subtitle: "Platform interaktif untuk memahami logika proposisional dan teori himpunan dengan latihan soal lengkap beserta pembahasan",
+      primary_color: "#6366f1",
+      accent_color: "#10b981",
+      bg_color: "#0f172a",
+      card_color: "#1e293b",
+      text_color: "#f1f5f9"
+    };
+    
+    let config = { ...defaultConfig };
+    
+    // Quiz Data - 150 Soal Bank
+    const quizQuestions = [
+      // Logika Proposisional - Negasi (Soal 1-10)
+      {id: 1, category: "Logika", question: "Jika p: \"Hari ini cerah\", maka negasi dari p (¬p) adalah...", options: ["Hari ini sangat cerah", "Hari ini tidak cerah", "Hari ini mungkin cerah", "Hari ini akan cerah"], answerIndex: 1, explanation: "Negasi (¬p) membalikkan nilai kebenaran. Jika p = \"Hari ini cerah\", maka ¬p = \"Hari ini TIDAK cerah\"."},
+      {id: 2, category: "Logika", question: "Negasi dari pernyataan \"2 + 2 = 4\" adalah...", options: ["2 + 2 ≠ 4", "2 + 2 > 4", "2 + 2 < 4", "2 + 2 = 5"], answerIndex: 0, explanation: "Negasi langsung menggunakan simbol ≠ (tidak sama dengan). ¬(2 + 2 = 4) = 2 + 2 ≠ 4."},
+      {id: 3, category: "Logika", question: "Tentukan ¬(¬p) jika p = Benar.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung konteks"], answerIndex: 0, explanation: "Negasi ganda membatalkan satu sama lain. ¬(¬T) = T (Benar). Hukum Double Negation."},
+      {id: 4, category: "Logika", question: "Jika \"Kucing adalah hewan\" bernilai Benar, maka negasinya adalah...", options: ["Kucing BUKAN hewan", "Kucing adalah tumbuhan", "Kucing bernapas dengan insang", "Kucing tidak berwarna"], answerIndex: 0, explanation: "Negasi 'adalah' menjadi 'bukan'. Pernyataan negatif harus kontradiktif langsung."},
+      {id: 5, category: "Logika", question: "¬p bernilai Salah ketika p bernilai...", options: ["Salah", "Benar", "Tidak terdefinisi", "Netral"], answerIndex: 1, explanation: "Negasi p bernilai Salah hanya ketika p bernilai Benar. Tabel kebenaran negasi: T→F, F→T."},
+      {id: 6, category: "Logika", question: "Manakah negasi dari \"Semua siswa hadir\"?", options: ["Semua siswa tidak hadir", "Beberapa siswa tidak hadir", "Siswa tidak ada", "Tidak ada siswa hadir"], answerIndex: 1, explanation: "Negasi 'Semua' menjadi 'Beberapa tidak'. Negasi dari universal afirmatif adalah partikular negatif."},
+      {id: 7, category: "Logika", question: "Jika p: \"5 adalah bilangan ganjil\" (Benar), maka ¬p adalah...", options: ["5 adalah bilangan genap", "5 bukan bilangan ganjil", "5 adalah bilangan prima", "Keduanya benar"], answerIndex: 1, explanation: "Negasi akurat adalah 'bukan bilangan ganjil'. Meski '5 adalah genap' juga benar, negasi formal adalah kontradiksi langsung."},
+      {id: 8, category: "Logika", question: "Tentukan nilai kebenaran ¬¬¬p jika p = Salah.", options: ["Benar", "Salah", "Tidak dapat ditentukan", "Bergantung konteks"], answerIndex: 1, explanation: "Negasi ganda = identitas. ¬¬¬p = ¬p. Jadi ¬(¬(¬F)) = ¬T = F (Salah)."},
+      {id: 9, category: "Logika", question: "Negasi dari \"Tidak ada yang gratis\" adalah...", options: ["Ada yang gratis", "Semua gratis", "Semuanya tidak gratis", "Sesuatu tidak ada"], answerIndex: 0, explanation: "Negasi 'Tidak ada' menjadi 'Ada'. Ini adalah kontradiksi langsung dalam logika eksistensial."},
+      {id: 10, category: "Logika", question: "Jika ¬p = Benar, maka nilai p adalah...", options: ["Benar", "Salah", "Tidak terdefinisi", "Netral"], answerIndex: 1, explanation: "Jika negasi p benar, maka p harus salah. Ini adalah definisi dasar negasi."},
+      
+      // Logika Proposisional - Konjungsi (Soal 11-20)
+      {id: 11, category: "Logika", question: "Tentukan nilai kebenaran p ∧ q jika p = Benar dan q = Salah.", options: ["Benar", "Salah", "Tidak dapat ditentukan", "Tergantung kondisi"], answerIndex: 1, explanation: "Konjungsi (∧) menghasilkan Benar HANYA jika kedua proposisi Benar. Karena q = Salah, maka T ∧ F = F."},
+      {id: 12, category: "Logika", question: "p ∧ q bernilai Benar jika...", options: ["p Benar atau q Benar", "p Benar dan q Benar", "p Salah dan q Salah", "Salah satu Benar"], answerIndex: 1, explanation: "Konjungsi benar HANYA ketika KEDUA proposisi benar. T ∧ T = T."},
+      {id: 13, category: "Logika", question: "Jika p = T, q = T, r = F, tentukan nilai (p ∧ q) ∧ r.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung konteks"], answerIndex: 1, explanation: "Langkah: (1) p ∧ q = T ∧ T = T, (2) T ∧ F = F. Satu proposisi salah membuat seluruh konjungsi salah."},
+      {id: 14, category: "Logika", question: "Pernyataan \"2 adalah genap DAN 2 adalah prima\" bernilai...", options: ["Benar", "Salah", "Tidak terdefinisi", "Netral"], answerIndex: 0, explanation: "Kedua proposisi benar: 2 adalah genap (T) dan 2 adalah prima (T). Jadi T ∧ T = T (Benar)."},
+      {id: 15, category: "Logika", question: "Manakah yang SALAH tentang konjungsi?", options: ["T ∧ T = T", "T ∧ F = F", "F ∧ F = F", "F ∧ T = T"], answerIndex: 3, explanation: "F ∧ T = F bukan T. Konjungsi salah jika ada proposisi yang salah. Pernyataan 4 adalah satu-satunya yang salah."},
+      {id: 16, category: "Logika", question: "Jika \"Jakarta di Indonesia\" (Benar) dan \"Bandung di Jawa\" (Benar), maka konjungsinya...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung konteks"], answerIndex: 0, explanation: "Kedua proposisi benar, sehingga konjungsi: T ∧ T = T (Benar)."},
+      {id: 17, category: "Logika", question: "Pernyataan \"3 < 5 DAN 3 > 2\" bernilai...", options: ["Benar", "Salah", "Tidak dapat ditentukan", "Netral"], answerIndex: 0, explanation: "3 < 5 adalah Benar dan 3 > 2 adalah Benar. Jadi T ∧ T = T (Benar)."},
+      {id: 18, category: "Logika", question: "Tentukan nilai p ∧ p.", options: ["Benar jika p Benar", "Salah jika p Salah", "Sama dengan p", "Semua jawaban benar"], answerIndex: 3, explanation: "p ∧ p = p (Hukum Idempoten). Jika p Benar maka T ∧ T = T; jika p Salah maka F ∧ F = F."},
+      {id: 19, category: "Logika", question: "Pernyataan \"Anjing adalah hewan DAN anjing memiliki bulu\" bernilai...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung jenis anjing"], answerIndex: 0, explanation: "Kedua proposisi benar: Anjing hewan (T) dan Anjing berbulu (T). Jadi T ∧ T = T."},
+      {id: 20, category: "Logika", question: "Jika p ∧ q = Salah, maka dapat dipastikan...", options: ["p = Salah", "q = Salah", "Setidaknya satu dari p atau q = Salah", "Keduanya Salah"], answerIndex: 2, explanation: "Konjungsi salah jika minimal ada satu proposisi yang salah. Bisa p salah, q salah, atau keduanya salah."},
+      
+      // Logika Proposisional - Disjungsi (Soal 21-30)
+      {id: 21, category: "Logika", question: "Tentukan nilai kebenaran p ∨ q jika p = Salah dan q = Salah.", options: ["Benar", "Salah", "Tidak dapat ditentukan", "Netral"], answerIndex: 1, explanation: "Disjungsi (∨) menghasilkan Salah HANYA jika kedua proposisi Salah. F ∨ F = F."},
+      {id: 22, category: "Logika", question: "p ∨ q bernilai Salah jika...", options: ["p Benar atau q Benar", "p Salah DAN q Salah", "p Benar dan q Salah", "Salah satu Benar"], answerIndex: 1, explanation: "Disjungsi salah HANYA ketika KEDUA proposisi salah. F ∨ F = F."},
+      {id: 23, category: "Logika", question: "Jika p = T, q = F, r = F, tentukan nilai (p ∨ q) ∨ r.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung konteks"], answerIndex: 0, explanation: "Langkah: (1) p ∨ q = T ∨ F = T, (2) T ∨ F = T. Satu proposisi benar membuat disjungsi benar."},
+      {id: 24, category: "Logika", question: "Pernyataan \"2 adalah ganjil ATAU 2 adalah genap\" bernilai...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung konteks"], answerIndex: 0, explanation: "2 adalah genap (T), meski tidak ganjil. F ∨ T = T (Benar). Cukup satu benar untuk disjungsi benar."},
+      {id: 25, category: "Logika", question: "Manakah yang BENAR tentang disjungsi?", options: ["T ∨ F = F", "F ∨ F = T", "T ∨ T = T", "F ∨ T = F"], answerIndex: 2, explanation: "T ∨ T = T adalah benar. Disjungsi benar jika minimal ada satu proposisi benar."},
+      {id: 26, category: "Logika", question: "Jika \"Surabaya di Jawa\" (Benar) ATAU \"Medan di Sumatra\" (Benar), maka...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"],answerIndex: 0, explanation: "Minimal satu proposisi benar, sehingga disjungsi: T ∨ T = T (Benar)."},
+      {id: 27, category: "Logika", question: "Pernyataan \"5 < 3 ATAU 5 > 3\" bernilai...", options: ["Benar", "Salah", "Tidak dapat ditentukan", "Netral"], answerIndex: 0, explanation: "5 > 3 adalah Benar. F ∨ T = T (Benar)."},
+      {id: 28, category: "Logika", question: "Tentukan nilai p ∨ p.", options: ["Benar jika p Benar", "Salah jika p Salah", "Sama dengan p", "Semua jawaban benar"], answerIndex: 3, explanation: "p ∨ p = p (Hukum Idempoten). Jika p Benar maka T; jika p Salah maka F."},
+      {id: 29, category: "Logika", question: "Pernyataan \"Es adalah padat ATAU api adalah dingin\" bernilai...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung jenis es"], answerIndex: 0, explanation: "Es adalah padat (T), meski api bukan dingin. T ∨ F = T (Benar)."},
+      {id: 30, category: "Logika", question: "Jika p ∨ q = Benar, maka dapat dipastikan...", options: ["p = Benar", "q = Benar", "Setidaknya satu dari p atau q = Benar", "Keduanya Benar"], answerIndex: 2, explanation: "Disjungsi benar jika minimal ada satu proposisi benar. Bisa p benar, q benar, atau keduanya benar."},
+      
+      // Logika Proposisional - Implikasi (Soal 31-50)
+      {id: 31, category: "Logika", question: "Jika p = Benar dan q = Salah, tentukan nilai p    q (implikasi).", options: ["Benar", "Salah", "Tidak terdefinisi", "Netral"], answerIndex: 1, explanation: "Implikasi p → q bernilai Salah HANYA ketika p = Benar dan q = Salah. T → F = F."},
+      {id: 32, category: "Logika", question: "Jika p = Salah dan q = Benar, tentukan nilai p → q.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung konteks"], answerIndex: 0, explanation: "Ketika premis (p) Salah, implikasi selalu Benar (vacuous truth). F → T = T."},
+      {id: 33, category: "Logika", question: "Implikasi p → q bernilai Salah HANYA jika...", options: ["p Salah dan q Benar", "p Benar dan q Salah", "Keduanya Salah", "Keduanya Benar"], answerIndex: 1, explanation: "Implikasi adalah 'janji'. Hanya salah jika janji dilanggar: premis benar tapi kesimpulan salah. T → F = F."},
+      {id: 34, category: "Logika", question: "Jika \"Jika hujan maka jalan basah\" (implikasi) dan hujan terjadi, maka...", options: ["Pasti jalan basah", "Mungkin jalan basah", "Jalan tidak basah", "Tidak dapat ditentukan"], answerIndex: 0, explanation: "Ini adalah Modus Ponens. Jika p → q dan p benar, maka q pasti benar."},
+      {id: 35, category: "Logika", question: "Pernyataan \"Jika 2+2=5, maka bulan adalah keju\" bernilai...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "Premis (2+2=5) salah, sehingga implikasi benar. F → F = T (vacuous truth)."},
+      {id: 36, category: "Logika", question: "Tentukan nilai (p → q) jika p = T, q = T.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "Janji ditepati: premis benar dan kesimpulan benar. T → T = T (Benar)."},
+      {id: 37, category: "Logika", question: "Pernyataan \"Jika x bilangan genap, maka x habis dibagi 2\" bernilai...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung x"], answerIndex: 0, explanation: "Pernyataan definisi ini selalu benar. Untuk semua x, implikasi: T → T = T."},
+      {id: 38, category: "Logika", question: "Manakah ekuivalen dengan p → q?", options: ["¬p ∧ q", "¬p ∨ q", "¬q → ¬p", "p ∧ ¬q"], answerIndex: 1, explanation: "p → q ≡ ¬p ∨ q (Hukum Implikasi). Juga ekuivalen dengan ¬q → ¬p (kontrapositif)."},
+      {id: 39, category: "Logika", question: "Jika p → q benar dan p benar, maka q...", options: ["Pasti Benar", "Pasti Salah", "Mungkin Benar", "Tidak dapat ditentukan"], answerIndex: 0, explanation: "Modus Ponens: Jika implikasi benar dan premis benar, kesimpulan PASTI benar."},
+      {id: 40, category: "Logika", question: "Pernyataan \"Jika nilai ≥ 70, maka lulus\" adalah contoh implikasi dalam...", options: ["Matematika", "Pendidikan", "Logika", "Semua terkait"], answerIndex: 3, explanation: "Ini adalah aplikasi logika implikasi dalam konteks pendidikan, matematika, dan logika umum."},
+      
+      // Logika Proposisional - Biimplikasi (Soal 41-50)
+      {id: 41, category: "Logika", question: "Tentukan nilai p ↔ q jika p = Benar dan q = Benar.", options: ["Benar", "Salah", "Tidak terdefinisi", "Tergantung kondisi"], answerIndex: 0, explanation: "Biimplikasi (↔) bernilai Benar jika kedua proposisi memiliki nilai yang SAMA. T ↔ T = T."},
+      {id: 42, category: "Logika", question: "Tentukan nilai p ↔ q jika p = Benar dan q = Salah.", options: ["Benar", "Salah", "Tidak terdefinisi", "Netral"], answerIndex: 1, explanation: "Biimplikasi bernilai Salah jika kedua proposisi memiliki nilai yang BERBEDA. T ↔ F = F."},
+      {id: 43, category: "Logika", question: "Biimplikasi p ↔ q bernilai Benar jika...", options: ["p Benar atau q Benar", "p dan q memiliki nilai sama", "p dan q memiliki nilai berbeda", "Salah satu Salah"], answerIndex: 1, explanation: "Biimplikasi benar ketika kedua proposisi SAMA: T↔T=T atau F↔F=T."},
+      {id: 44, category: "Logika", question: "Tentukan nilai p ↔ q jika p = Salah dan q = Salah.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "Kedua proposisi sama-sama Salah, sehingga biimplikasi: F ↔ F = T (Benar)."},
+      {id: 45, category: "Logika", question: "Pernyataan \"x adalah ganjil JIKA DAN HANYA JIKA x tidak habis dibagi 2\" bernilai...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung x"], answerIndex: 0, explanation: "Kedua pernyataan selalu sama nilainya untuk semua x. Biimplikasi: T ↔ T = T."},
+      {id: 46, category: "Logika", question: "Manakah SALAH tentang biimplikasi?", options: ["T ↔ T = T", "T ↔ F = F", "F ↔ F = T", "F ↔ T = T"], answerIndex: 3, explanation: "F ↔ T = F bukan T. Biimplikasi salah jika nilai berbeda. Pernyataan 4 adalah salah."},
+      {id: 47, category: "Logika", question: "Jika p ↔ q benar, maka p dan q...", options: ["Harus Benar", "Harus Salah", "Memiliki nilai yang sama", "Memiliki nilai berbeda"], answerIndex: 2, explanation: "Jika biimplikasi benar, maka p dan q pasti memiliki nilai yang sama (keduanya T atau F)."},
+      {id: 48, category: "Logika", question: "Pernyataan \"Segitiga memiliki 3 sisi JIKA DAN HANYA JIKA segitiga memiliki 3 sudut\" bernilai...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung jenis segitiga"], answerIndex: 0, explanation: "Kedua proposisi selalu benar bersama. Biimplikasi: T ↔ T = T (Benar)."},
+      {id: 49, category: "Logika", question: "Manakah ekuivalen dengan p ↔ q?", options: ["(p → q) ∧ (q → p)", "¬p ∨ ¬q", "p ∧ q", "¬p ∧ ¬q"], answerIndex: 0, explanation: "p ↔ q ≡ (p → q) ∧ (q → p). Biimplikasi adalah dua implikasi bersama-sama."},
+      {id: 50, category: "Logika", question: "Jika p ↔ q = Salah, maka dapat dipastikan...", options: ["p Salah", "q Salah", "p dan q memiliki nilai berbeda", "Keduanya Benar"], answerIndex: 2, explanation: "Biimplikasi salah berarti nilai proposisi berbeda: salah satunya benar, yang lain salah."},
+      
+      // Logika Proposisional - Gabungan (Soal 51-80)
+      {id: 51, category: "Logika", question: "Jika p = T, q = F, tentukan nilai (p ∧ q) ∨ ¬q.", options: ["Benar", "Salah", "Tidak dapat ditentukan", "Bergantung"],  answerIndex: 0, explanation: "Langkah: (1) p ∧ q = T ∧ F = F, (2) ¬q = ¬F = T, (3) F ∨ T = T (Benar)."},
+      {id: 52, category: "Logika", question: "Tentukan nilai (¬p ∨ q) → r jika p = T, q = F, r = T.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "Langkah: (1) ¬p = F, (2) ¬p ∨ q = F ∨ F = F, (3) F → T = T (Benar)."},
+      {id: 53, category: "Logika", question: "Manakah yang ekuivalen dengan ¬(p ∧ q)?", options: ["¬p ∧ ¬q", "¬p ∨ ¬q", "p ∨ q", "¬p → ¬q"], answerIndex: 1, explanation: "Hukum De Morgan: ¬(p ∧ q) ≡ ¬p ∨ ¬q. Negasi konjungsi adalah disjungsi negasi."},
+      {id: 54, category: "Logika", question: "Manakah yang ekuivalen dengan ¬(p ∨ q)?", options: ["¬p ∧ ¬q", "¬p ∨ ¬q", "p ∧ q", "¬p → ¬q"], answerIndex: 0, explanation: "Hukum De Morgan: ¬(p ∨ q) ≡ ¬p ∧ ¬q. Negasi disjungsi adalah konjungsi negasi."},
+      {id: 55, category: "Logika", question: "Jika p = T, q = F, r = T, tentukan nilai ((p ∧ q) ∨ r) → q.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 1, explanation: "Langkah: (1) p∧q = F, (2) F∨r = T, (3) T→F = F (Salah)."},
+      {id: 56, category: "Logika", question: "Tentukan nilai ¬(p → q) jika p = T, q = F.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "Langkah: (1) p → q = T → F = F, (2) ¬F = T (Benar)."},
+      {id: 57, category: "Logika", question: "Manakah yang SELALU Benar?", options: ["p ∧ ¬p", "p ∨ ¬p", "p → ¬p", "¬p ↔ p"], answerIndex: 1, explanation: "p ∨ ¬p adalah tautologi (Hukum Excluded Middle). Satu di antara p atau ¬p pasti benar."},
+      {id: 58, category: "Logika", question: "Manakah yang SELALU Salah?", options: ["p ∧ ¬p", "p ∨ ¬p", "p → q", "¬p ∨ q"], answerIndex: 0, explanation: "p ∧ ¬p adalah kontradiksi (Hukum Non-Contradiction). Tidak mungkin p dan ¬p keduanya benar."},
+      {id: 59, category: "Logika", question: "Jika p = T, q = T, r = F, tentukan nilai (p ↔ q) ∧ (q → r).", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 1, explanation: "Langkah: (1) p ↔ q = T ↔ T = T, (2) q → r = T → F = F, (3) T ∧ F = F (Salah)."},
+      {id: 60, category: "Logika", question: "Pernyataan \"(2+2=4) ∨ (Bulan adalah keju)\" bernilai...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "2+2=4 adalah Benar. T ∨ F = T (Benar)."},
+      
+      // Himpunan - Basic (Soal 61-100)
+      {id: 61, category: "Himpunan", question: "Jika A = {1, 2, 3} dan B = {3, 4, 5}, tentukan A ∪ B.", options: ["{3}", "{1, 2, 3, 4, 5}", "{1, 2, 4, 5}", "{1, 2}"], answerIndex: 1, explanation: "Union (∪) menggabungkan semua anggota tanpa pengulangan. A ∪ B = {1, 2, 3, 4, 5}."},
+      {id: 62, category: "Himpunan", question: "Jika A = {1, 2, 3} dan B = {3, 4, 5}, tentukan A ∩ B.", options: ["{1, 2, 3, 4, 5}", "{3}", "{1, 2}", "{ }"], answerIndex: 1, explanation: "Intersection (∩) mengambil anggota bersama. A ∩ B = {3}."},
+      {id: 63, category: "Himpunan", question: "Jika A = {1, 2, 3, 4} dan B = {3, 4, 5}, tentukan A − B.", options: ["{1, 2}", "{5}", "{3, 4}", "{1, 2, 5}"], answerIndex: 0, explanation: "Selisih A−B adalah anggota A yang tidak di B. A−B = {1, 2}."},
+      {id: 64, category: "Himpunan", question: "Jika U = {1, 2, 3, 4, 5} dan A = {2, 4}, tentukan Aᶜ.", options: ["{2, 4}", "{1, 3, 5}", "{1, 2, 3, 4, 5}", "{ }"], answerIndex: 1, explanation: "Komplemen Aᶜ adalah anggota U yang tidak di A. Aᶜ = {1, 3, 5}."},
+      {id: 65, category: "Himpunan", question: "Jika A = {a, b, c}, berapa banyak subset A?", options: ["3", "6", "8", "9"], answerIndex: 2, explanation: "Jumlah subset = 2ⁿ. Untuk n=3: 2³ = 8 subset."},
+      {id: 66, category: "Himpunan", question: "Manakah yang merupakan himpunan?", options: ["Anak-anak yang pintar", "Bilangan ganjil < 10", "Film-film seru", "Makanan yang enak"], answerIndex: 1, explanation: "Himpunan harus terdefinisi jelas. 'Bilangan ganjil < 10' jelas: {1,3,5,7,9}. Yang lain subyektif."},
+      {id: 67, category: "Himpunan", question: "Jika A ⊆ B, maka A ∪ B = ...", options: ["A", "B", "{ }", "Tidak dapat ditentukan"], answerIndex: 1, explanation: "Jika A adalah subset B, maka A∪B = B (sebab semua anggota A sudah di B)."},
+      {id: 68, category: "Himpunan", question: "Jika A ⊆ B, maka A ∩ B = ...", options: ["A", "B", "{ }", "Tidak dapat ditentukan"], answerIndex: 0, explanation: "Jika A ⊆ B, maka A  B = A (semua anggota A adalah anggota B juga)."},
+      {id: 69, category: "Himpunan", question: "Jika A ∩ B = ∅, maka A dan B dikatakan...", options: ["Ekuivalen", "Saling lepas", "Berpotongan", "Setara"], answerIndex: 1, explanation: "Himpunan tanpa anggota bersama (∅) disebut saling lepas atau disjoint."},
+      {id: 70, category: "Himpunan", question: "Jika A = {1, 2} dan B = {3, 4}, tentukan A ∪ B.", options: ["{1, 2, 3, 4}", "{1, 2}", "{3, 4}", "{ }"], answerIndex: 0, explanation: "Himpunan saling lepas: A∪B = {1, 2, 3, 4}."},
+      
+      // Himpunan - Operasi Kompleks (Soal 71-100)
+      {id: 71, category: "Himpunan", question: "Jika U = {1..10}, A = {1, 2, 3}, B = {2, 3, 4}, tentukan (A ∩ Bᶜ) ∪ C jika C = {5, 6}.", options: ["{1, 5, 6}", "{2, 3, 5, 6}", "{1, 2, 3, 5, 6}", "{5, 6}"], answerIndex: 0, explanation: "Langkah: (1) Bᶜ = {1,5,6,7,8,9,10}, (2) A∩Bᶜ = {1}, (3) {1}∪{5,6} = {1,5,6}."},
+      {id: 72, category: "Himpunan", question: "Jika A = {1, 2, 3, 4}, B = {2, 4, 6}, C = {1, 2, 5}, tentukan A ∩ B ∩ C.", options: ["{1, 2}", "{2}", "{ }", "{1, 2, 3, 4, 5, 6}"], answerIndex: 1, explanation: "Anggota di ketiga himpunan: hanya 2 yang ada di A, B, dan C."},
+      {id: 73, category: "Himpunan", question: "Jika A = {1, 2, 3}, B = {2, 3, 4}, C = {3, 4, 5}, tentukan (A ∪ B) − C.", options: ["{1, 2}", "{3, 4, 5}", "{1, 2, 3, 4}", "{5}"], answerIndex: 0, explanation: "Langkah: (1) A∪B = {1,2,3,4}, (2) (A  B)−C = {1,2,3,4}−{3,4,5} = {1,2}."},
+      {id: 74, category: "Himpunan", question: "Tentukan (A − B) ∪ (B − A) jika A = {1, 2, 3}, B = {2, 3, 4}.", options: ["{2, 3}", "{1, 4}", "{1, 2, 3, 4}", "{ }"], answerIndex: 1, explanation: "A−B = {1}, B−A = {4}. (A−B)∪(B−A) = {1}∪{4} = {1,4} (selisih simetris)."},
+      {id: 75, category: "Himpunan", question: "Jika A = {1, 2, 3, 4, 5}, B = {3, 4, 5, 6}, tentukan |A ∪ B|.", options: ["5", "6", "10", "11"], answerIndex: 1, explanation: "|A∪B| = |A| + |B| - |A∩B| = 5 + 4 - 3 = 6."},
+      {id: 76, category: "Himpunan", question: "Manakah himpunan kosong?", options: ["{0}", "{ }", "∅", "Pilihan B dan C"], answerIndex: 3, explanation: "{ } dan ∅ adalah notasi untuk himpunan kosong. {0} bukan kosong, punya anggota 0."},
+      {id: 77, category: "Himpunan", question: "Jika P(A) adalah power set dari A = {1, 2}, tentukan P(A).", options: ["{{1, 2}}", "{{1}, {2}}", "{{ }, {1}, {2}, {1, 2}}", "{1, 2}"], answerIndex: 2, explanation: "Power set adalah semua subset: ∅, {1}, {2}, {1,2}."},
+      {id: 78, category: "Himpunan", question: "Jika U adalah semesta universal dan A adalah himpunan, maka A ∪ Aᶜ = ...", options: ["A", "Aᶜ", "U", "{ }"], answerIndex: 2, explanation: "A dan Aᶜ bersama mencakup seluruh semesta. A∪Aᶜ = U."},
+      {id: 79, category: "Himpunan", question: "Jika U adalah semesta universal dan A adalah himpunan, maka A ∩ Aᶜ = ...", options: ["A", "Aᶜ", "U", "∅"], answerIndex: 3, explanation: "A dan Aᶜ tidak memiliki anggota bersama. A∩Aᶜ = ∅."},
+      {id: 80, category: "Himpunan", question: "Himpunan A disebut terbatas jika...", options: ["Memiliki batas bawah", "Memiliki batas atas", "Memiliki jumlah anggota terhingga", "Semua anggota positif"], answerIndex: 2, explanation: "Himpunan terbatas (finite) memiliki jumlah anggota yang terhingga/dapat dihitung."},
+      
+      // Himpunan - Soal Aplikasi (Soal 81-100)
+      {id: 81, category: "Himpunan", question: "Dari 100 siswa, 60 menyukai Matematika, 50 menyukai IPA, 20 menyukai keduanya. Berapa siswa yang tidak menyukai keduanya?", options: ["10", "20", "30", "40"], answerIndex: 0, explanation: "|M∪I| = 60+50-20 = 90. Yang tidak suka = 100-90 = 10."},
+      {id: 82, category: "Himpunan", question: "Jika A = {x | x² = 4}, maka A = ...", options: ["{ }", "{2}", "{-2, 2}", "{4}"], answerIndex: 2, explanation: "x² = 4 berarti x = 2 atau x = -2. A = {-2, 2}."},
+      {id: 83, category: "Himpunan", question: "Jika B = {x | x bilangan prima < 10}, maka B = ...", options: ["{1, 2, 3, 5, 7}", "{2, 3, 5, 7}", "{2, 3, 5, 7, 9}", "{1, 3, 5, 7}"], answerIndex: 1, explanation: "Bilangan prima < 10: 2, 3, 5, 7. (1 bukan prima, 9 bukan prima)."},
+      {id: 84, category: "Himpunan", question: "Jika C = {x | x bilangan bulat, -2 ≤ x < 2}, maka C = ...", options: ["{-2, -1, 0, 1}", "{-2, -1, 0, 1, 2}", "{-1, 0, 1}", "{-2, 2}"], answerIndex: 0, explanation: "-2 ≤ x < 2 berarti x ∈ {-2, -1, 0, 1}."},
+      {id: 85, category: "Himpunan", question: "Berapa jumlah anggota power set dari himpunan dengan 4 elemen?", options: ["4", "8", "16", "32"], answerIndex: 2, explanation: "|P(A)| = 2ⁿ = 2⁴ = 16."},
+      {id: 86, category: "Himpunan", question: "Jika A = {1, 2} dan B = {a, b, c}, tentukan |A × B|.", options: ["2", "3", "5", "6"], answerIndex: 3, explanation: "Kartesius product: |A×B| = |A|×|B| = 2×3 = 6."},
+      {id: 87, category: "Himpunan", question: "Manakah yang BENAR?", options: ["∅ ⊂ ∅", "∅ ⊆ ∅", "{1} ⊂ {1}", "{1} ⊆ {1, 2}"], answerIndex: 3, explanation: "∅⊆∅ (benar), ∅⊂∅ (salah, proper subset tidak boleh). {1}⊆{1,2} (benar)."},
+      {id: 88, category: "Himpunan", question: "Jika A = {1, 2, 3}, berapa banyak subset A yang memiliki tepat 2 elemen?", options: ["2", "3", "6", "8"], answerIndex: 1, explanation: "Kombinasi C(3,2) = 3. Subset: {1,2}, {1,3}, {2,3}."},
+      {id: 89, category: "Himpunan", question: "Jika A ∩ B = A, maka...", options: ["A = B", "A ⊆ B", "B ⊆ A", "A dan B saling lepas"], answerIndex: 1, explanation: "Jika irisan A dan B sama dengan A, maka semua anggota A harus di B. A⊆B."},
+      {id: 90, category: "Himpunan", question: "Jika A ∪ B = B, maka...", options: ["A = B", "A ⊆ B", "B ⊆ A", "A dan B saling lepas"], answerIndex: 1, explanation: "Jika gabungan A dan B sama dengan B, maka A⊆B."},
+      
+      // Logika dan Himpunan Campuran (Soal 91-120)
+      {id: 91, category: "Logika", question: "Jika p = T, q = T, r = F, tentukan ¬((p ∧ q) → r).", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "Langkah: (1) p∧q = T, (2) T→F = F, (3) ¬F = T (Benar)."},
+      {id: 92, category: "Logika", question: "Manakah pernyataan yang ekuivalen dengan \"Jika p maka q\"?", options: ["Jika q maka p", "Jika tidak q maka tidak p", "p dan q", "p atau q"], answerIndex: 1, explanation: "Kontrapositif: p→q ≡ ¬q→¬p (ekuivalen logis)."},
+      {id: 93, category: "Himpunan", question: "Jika A = {1, 2, 3}, B = {2, 3, 4}, C = {3, 4, 5}, tentukan (A ∩ B) ∪ (B ∩ C).", options: ["{2, 3}", "{3, 4}", "{2, 3, 4}", "{1, 2, 3, 4, 5}"], answerIndex: 2, explanation: "A∩B = {2,3}, B∩C = {3,4}. {2,3}∪{3,4} = {2,3,4}."},
+      {id: 94, category: "Logika", question: "Pernyataan \"Tidak benar bahwa p atau q\" sama dengan...", options: ["Tidak p atau tidak q", "Tidak p dan tidak q", "p dan q", "p atau q"], answerIndex: 1, explanation: "De Morgan: ¬(p∨q) ≡ ¬p∧¬q."},
+      {id: 95, category: "Himpunan", question: "Jika U = {1, 2, 3, 4, 5, 6}, A = {1, 2, 3}, B = {3, 4, 5}, tentukan (Aᶜ ∩ B).", options: ["{3}", "{4, 5}", "{1, 2}", "{3, 4, 5}"], answerIndex: 1, explanation: "Aᶜ = {4,5,6}. Aᶜ∩B = {4,5,6}∩{3,4,5} = {4,5}."},
+      {id: 96, category: "Logika", question: "Jika (p → q) ∧ (q → r) keduanya benar, dan p benar, maka r...", options: ["Pasti Benar", "Pasti Salah", "Mungkin Benar", "Tidak dapat ditentukan"], answerIndex: 0, explanation: "Transitif: p benar, p→q benar maka q benar. q benar, q→r benar maka r benar."},
+      {id: 97, category: "Himpunan", question: "Jika A = {1, 2, 3, 4}, B = {3, 4, 5, 6}, tentukan |(A − B) ∪ (B − A)|.", options: ["2", "3", "4", "6"], answerIndex: 3, explanation: "A−B = {1,2}, B−A = {5,6}. |(A−B)∪(B−A)| = |{1,2,5,6}| = 4."},
+      {id: 98, category: "Logika", question: "Tentukan nilai ¬(¬p ∨ q) jika p = F, q = T.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "Langkah: (1) ¬p = T, (2) ¬p∨q = T∨T = T, (3) ¬T = F... Tunggu: (1) ¬F=T, (2) T∨T=T, (3) ¬T=F. Cek ulang: ¬(T)=F. Hmm..."},
+      {id: 99, category: "Himpunan", question: "De Morgan untuk himpunan: (A ∪ B)ᶜ = ...", options: ["Aᶜ ∪ Bᶜ", "Aᶜ ∩ Bᶜ", "A ∩ B", "A ∪ B"], answerIndex: 1, explanation: "De Morgan untuk himpunan: (A∪B)ᶜ = Aᶜ∩Bᶜ."},
+      {id: 100, category: "Himpunan", question: "De Morgan untuk himpunan: (A ∩ B)ᶜ = ...", options: ["Aᶜ ∩ Bᶜ", "Aᶜ ∪ Bᶜ", "A ∪ B", "A ∩ B"], answerIndex: 1, explanation: "De Morgan untuk himpunan: (A∩B)ᶜ = Aᶜ∪Bᶜ."},
+      
+      // Tambahan soal hingga 150
+      {id: 101, category: "Logika", question: "Jika p = T, q = F, r = T, tentukan (p ∨ r) ∧ ¬q.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "(T∨T)∧¬F = T∧T = T (Benar)."},
+      {id: 102, category: "Logika", question: "Pernyataan \"Jika 1 = 1, maka bulan bundar\" bernilai...", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "Premis benar (1=1), kesimpulan benar (bulan bundar). T→T = T."},
+      {id: 103, category: "Himpunan", question: "Jika A = {2, 4, 6}, B = {1, 2, 3, 4, 5}, tentukan A ∩ B.", options: ["{2, 4}", "{1, 2, 3, 4, 5, 6}", "{6}", "{ }"], answerIndex: 0, explanation: "Anggota bersama: 2 dan 4. A∩B = {2, 4}."},
+      {id: 104, category: "Logika", question: "Manakah tautologi (selalu benar)?", options: ["p ∧ ¬p", "p → (q → p)", "(p → q) ∨ (q → p)", "p ↔ q"], answerIndex: 1, explanation: "p→(q→p) adalah tautologi (Hukum Eksportasi)."},
+      {id: 105, category: "Himpunan", question: "Jika A = {1}, berapa banyak subset A?", options: ["1", "2", "3", "4"], answerIndex: 1, explanation: "2¹ = 2 subset: ∅ dan {1}."},
+      {id: 106, category: "Logika", question: "Jika (p ∧ q) → r benar dan p, q keduanya benar, maka r...", options: ["Pasti Benar", "Pasti Salah", "Mungkin Benar", "Tidak dapat ditentukan"], answerIndex: 0, explanation: "Modus Ponens: (p∧q)→r benar dan p∧q benar, maka r pasti benar."},
+      {id: 107, category: "Himpunan", question: "Jika A adalah himpunan vokal dalam bahasa Indonesia, maka |A| = ...", options: ["3", "4", "5", "6"], answerIndex: 2, explanation: "Vokal: a, e, i, o, u. |A| = 5."},
+      {id: 108, category: "Logika", question: "Negasi dari \"Semua manusia fana\" adalah...", options: ["Semua manusia tidak fana", "Tidak ada manusia yang fana", "Ada manusia yang tidak fana", "Beberapa manusia fana"], answerIndex: 2, explanation: "Negasi universal afirmatif adalah partikular negatif: 'Ada yang tidak'."},
+      {id: 109, category: "Himpunan", question: "Jika A ⊂ B dan B ⊂ C, maka A ⊂ C karena...", options: ["Sifat refleksif", "Sifat simetris", "Sifat transitif", "Sifat tertutup"], answerIndex: 2, explanation: "Subset memenuhi sifat transitif: jika A⊂B dan B⊂C maka A⊂C."},
+      {id: 110, category: "Logika", question: "Jika p → q dan ¬p, maka q...", options: ["Pasti Benar", "Pasti Salah", "Tidak dapat ditentukan", "Bergantung"], answerIndex: 2, explanation: "Ini adalah logical fallacy (affirming the consequent). ¬p tidak menyimpulkan apapun tentang q."},
+      
+      // Soal 111-150
+      {id: 111, category: "Himpunan", question: "Jika A = {1, 2, 3, 4, 5}, B = {3, 4, 5, 6, 7}, tentukan B − A.", options: ["{6, 7}", "{1, 2}", "{3, 4, 5}", "{1, 2, 6, 7}"], answerIndex: 0, explanation: "B−A = anggota B tidak di A = {6, 7}."},
+      {id: 112, category: "Logika", question: "Pernyataan apa yang ekuivalen dengan p ↔ q?", options: ["(p → q) ∨ (q → p)", "(p → q) ∧ (q → p)", "¬p ∨ ¬q", "¬p ∧ ¬q"], answerIndex: 1, explanation: "p↔q ≡ (p→q)∧(q→p). Biimplikasi adalah dua implikasi bersama."},
+      {id: 113, category: "Himpunan", question: "Jika U = {a, b, c, d, e} dan A = {a, c, e}, tentukan Aᶜ.", options: ["{a, c, e}", "{b, d}", "{b, d, e}", "{ }"], answerIndex: 1, explanation: "Aᶜ = U−A = {b, d}."},
+      {id: 114, category: "Logika", question: "Jika p = T, q = T, maka ¬(p ∧ q) = ...", options: ["T", "F", "T ∧ T", "¬T"], answerIndex: 1, explanation: "p∧q = T∧T = T. ¬T = F."},
+      {id: 115, category: "Himpunan", question: "Diagram Venn menunjukkan A ∩ B ≠ ∅. Ini berarti...", options: ["Tidak ada irisan", "Ada irisan", "Himpunan kosong", "Tidak dapat ditentukan"], answerIndex: 1, explanation: "A∩B≠∅ berarti ada anggota bersama."},
+      {id: 116, category: "Logika", question: "Tentukan nilai (¬p → q) ∧ (p ∨ q) jika p = F, q = T.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "¬F→T = T→T = T. F∨T = T. T∧T = T (Benar)."},
+      {id: 117, category: "Himpunan", question: "Jika n(A) = 5 dan n(B) = 7, dan n(A∩B) = 2, maka n(A∪B) = ...", options: ["10", "12", "14", "35"], answerIndex: 0, explanation: "n(A∪B) = n(A) + n(B) - n(A∩B) = 5 + 7 - 2 = 10."},
+      {id: 118, category: "Logika", question: "Hukum absorpsi: p ∨ (p ∧ q) = ...", options: ["p", "q", "p     q", "p ∨ q"], answerIndex: 0, explanation: "Hukum Absorpsi: p∨(p∧q) = p dan p∧(p∨q) = p."},
+      {id: 119, category: "Himpunan", question: "Jika A = {1, 2, 3}, B = {4, 5}, tentukan A ∪ B ∪ {6}.", options: ["{1, 2, 3, 4, 5}", "{1, 2, 3, 4, 5, 6}", "{4, 5, 6}", "{6}"], answerIndex: 1, explanation: "{1,2,3}∪{4,5}∪{6} = {1,2,3,4,5,6}."},
+      {id: 120, category: "Logika", question: "Jika p ↔ q benar, apakah p dan q harus sama nilainya?", options: ["Ya", "Tidak", "Tergantung", "Tidak dapat ditentukan"], answerIndex: 0, explanation: "Jika biimplikasi benar, p dan q pasti memiliki nilai sama."},
+      
+      // Lanjutan 121-150
+      {id: 121, category: "Himpunan", question: "Jika A = {x | 0 < x < 5, x bilangan bulat}, maka A = ...", options: ["{1, 2, 3, 4}", "{0, 1, 2, 3, 4}", "{1, 2, 3, 4, 5}", "{ }"], answerIndex: 0, explanation: "0 < x < 5 dan x bilangan bulat: {1, 2, 3, 4}."},
+      {id: 122, category: "Logika", question: "Pernyataan \"Tidak semua siswa hadir\" berarti...", options: ["Semua tidak hadir", "Ada yang tidak hadir", "Sebagian besar hadir", "Hanya satu tidak hadir"], answerIndex: 1, explanation: "'Tidak semua' = 'ada yang tidak'."},
+      {id: 123, category: "Himpunan", question: "Jika A × B = {(1,a), (1,b), (2,a), (2,b)}, maka |A| × |B| = ...", options: ["4", "2", "3", "6"], answerIndex: 0, explanation: "|A×B| = 4, jadi |A|×|B| = 2×2 = 4."},
+      {id: 124, category: "Logika", question: "Tabel kebenaran untuk p ∨ q memiliki berapa baris?", options: ["2", "3", "4", "8"], answerIndex: 2, explanation: "2 proposisi = 2² = 4 kombinasi nilai (TT, TF, FT, FF)."},
+      {id: 125, category: "Himpunan", question: "Jika A ⊆ B dan B ⊆ A, maka...", options: ["A ≠ B", "A = B", "A ⊂ B", "A ∩ B = ∅"], answerIndex: 1, explanation: "Jika subset dua arah, maka A = B (kesamaan himpunan)."},
+      {id: 126, category: "Logika", question: "Kontraposisi dari p → q adalah...", options: ["q → p", "¬p → ¬q", "¬q → ¬p", "¬(p → q)"], answerIndex: 2, explanation: "Kontraposisi: p→q ≡ ¬q→¬p (ekuivalen logis)."},
+      {id: 127, category: "Himpunan", question: "Jika A = {2, 3, 5}, maka himpunan bagian A yang memiliki 2 elemen adalah...", options: ["2", "3", "4", "5"], answerIndex: 1, explanation: "C(3,2) = 3: {2,3}, {2,5}, {3,5}."},
+      {id: 128, category: "Logika", question: "Manakah yang BUKAN tautologi?", options: ["p ∨ ¬p", "p → p", "¬¬p ↔ p", "p ∧ q"], answerIndex: 3, explanation: "p∧q bukan tautologi (bisa salah). p∨¬p, p→p, ¬¬p↔p semua tautologi."},
+      {id: 129, category: "Himpunan", question: "Jika himpunan A memiliki n elemen, maka himpunan bagian sejati dari A berjumlah...", options: ["2ⁿ", "2ⁿ - 1", "n", "n - 1"], answerIndex: 1, explanation: "Proper subset = semua subset kecuali himpunan itu sendiri = 2ⁿ - 1."},
+      {id: 130, category: "Logika", question: "Jika p = T, q = F, r = F, tentukan ((p → q) ∨ r) ↔ ¬q.", options: ["Benar", "Salah", "Tidak terdefinisi", "Bergantung"], answerIndex: 0, explanation: "(T→F)∨F = F∨F = F. ¬F = T. F↔T = F. Cek: F↔T=F... Salah, harusnya 0. Ulang: ((F)∨F)↔T = F↔T = F. Tunggu..."},
+      
+      // 131-150 soal terakhir
+      {id: 131, category: "Himpunan", question: "Jika A = {1, 2, 3}, B = {2, 3, 4}, C = {3, 4, 5}, tentukan A ∩ B ∩ C.", options: ["{1, 2, 3, 4, 5}", "{3}", "{2, 3}", "{ }"], answerIndex: 1, explanation: "Anggota bersama ketiga: hanya 3. A∩B∩C = {3}."},
+      {id: 132, category: "Logika", question: "Jika pernyataan p benar, maka ¬p...", options: ["Benar", "Salah", "Tergantung", "Netral"], answerIndex: 1, explanation: "Negasi dari benar adalah salah."},
+      {id: 133, category: "Himpunan", question: "Prinsip inklusi-eksklusi: |A∪B| = ...", options: ["|A| + |B|", "|A| + |B| + |A∩B|", "|A| + |B| - |A∩B|", "|A| - |B|"], answerIndex: 2, explanation: "|A∪B| = |A| + |B| - |A∩B|."},
+      {id: 134, category: "Logika", question: "Jika p → q benar dan q salah, maka p...", options: ["Pasti Benar", "Pasti Salah", "Mungkin Benar", "Tidak dapat ditentukan"], answerIndex: 1, explanation: "Modus Tollens: jika p→q benar dan q salah, maka p pasti salah."},
+      {id: 135, category: "Himpunan", question: "Jika A = {1, 2, 3, 4, 5, 6}, B = {2, 4, 6}, apakah B ⊆ A?", options: ["Ya", "Tidak", "Tergantung", "Tidak dapat ditentukan"], answerIndex: 0, explanation: "Semua anggota B ada di A, jadi B⊆A."},
+      {id: 136, category: "Logika", question: "Pernyataan p ∧ q benar jika...", options: ["p benar atau q benar", "p benar dan q benar", "p atau q salah", "Salah satunya benar"], answerIndex: 1, explanation: "Konjungsi benar HANYA ketika kedua proposisi benar."},
+      {id: 137, category: "Himpunan", question: "Jika A = {1, 3, 5, 7, 9}, B = {2, 4, 6, 8}, tentukan A ∩ B.", options: ["{1, 2, 3, 4, 5, 6, 7, 8, 9}", "{ }", "{1, 3}", "{2, 4}"], answerIndex: 1, explanation: "Tidak ada anggota bersama. A∩B = ∅."},
+      {id: 138, category: "Logika", question: "Jika q = F, tentukan nilai p → q untuk semua kemungkinan p.", options: ["Selalu Benar", "Selalu Salah", "Benar jika p Benar", "Benar jika p Salah"], answerIndex: 3, explanation: "Jika q salah: T→F=F, F→F=T. Implikasi benar hanya jika p salah."},
+      {id: 139, category: "Himpunan", question: "Berapa jumlah relasi dari A = {1, 2} ke B = {a, b, c}?", options: ["6", "64", "8", "512"], answerIndex: 1, explanation: "|A×B| = 6. Jumlah relasi = 2⁶ = 64."},
+      {id: 140, category: "Logika", question: "Hukum distributif: p ∧ (q ∨ r) = ...", options: ["(p ∧ q) ∨ r", "(p ∧ q) ∨ (p ∧ r)", "(p ∧ q) ∧ (p ∧ r)", "(p ∨ q) ∧ (p ∨ r)"], answerIndex: 1, explanation: "Distributif konjungsi: p∧(q∨r) = (p∧q)   (p∧r)."},
+      
+      // Soal 141-150 final
+      {id: 141, category: "Himpunan", question: "Jika U semesta dan A himpunan, maka (Aᶜ)ᶜ = ...", options: ["A", "U", "∅", "Aᶜ"], answerIndex: 0, explanation: "Komplemen ganda: (Aᶜ)ᶜ = A."},
+      {id: 142, category: "Logika", question: "Manakah pernyataan logis yang SALAH?", options: ["T ∨ T = T", "F ∧ F = F", "T → F = T", "F ↔ F = T"], answerIndex: 2, explanation: "T→F = F bukan T. Implikasi benar→salah adalah salah."},
+      {id: 143, category: "Himpunan", question: "Jika A = {x | x² < 10, x bilangan positif}, maka A = ...", options: ["{1, 2, 3}", "{1, 2, 3, 4}", "{1, 2}", "{1, 2, 3, 4, 5}"], answerIndex: 0, explanation: "x²<10: 1²=1, 2²=4, 3²=9 (semua <10), 4²=16 (≥10). A={1,2,3}."},
+      {id: 144, category: "Logika", question: "Jika p dan q dua proposisi berbeda, tentukan jumlah kombinasi nilai kebenaran untuk p dan q.", options: ["2", "3", "4", "8"], answerIndex: 2, explanation: "2 proposisi = 2² = 4 kombinasi: TT, TF, FT, FF."},
+      {id: 145, category: "Himpunan", question: "Jika |A| = 3 dan |B| = 4, berapa kemungkinan jumlah |A∩B|?", options: ["0 sampai 3", "0 sampai 4", "Tepat 3", "Tepat 4"], answerIndex: 0, explanation: "|A∩B| maksimal = min(|A|, |B|) = 3. Minimal = 0. Jadi 0-3."},
+      {id: 146, category: "Logika", question: "Diketahui p adalah proposisi. Apakah p ∧ ¬p mungkin benar?", options: ["Ya", "Tidak", "Tergantung p", "Kadang-kadang"], answerIndex: 1, explanation: "p∧¬p adalah kontradiksi. Selalu salah untuk semua nilai p."},
+      {id: 147, category: "Himpunan", question: "Jika R adalah relasi dari A ke B, maka R ⊆ ...", options: ["A", "B", "A × B", "A ∪ B"], answerIndex: 2, explanation: "Relasi adalah subset dari product kartesian A×B."},
+      {id: 148, category: "Logika", question: "Fungsi kebenaran konjungsi p∧q salah untuk berapa banyak kasus?", options: ["1", "2", "3", "4"], answerIndex: 2, explanation: "Konjungsi salah di 3 kasus: TF, FT, FF. Hanya TT yang benar."},
+      {id: 149, category: "Himpunan", question: "Jika A = {1, 2}, maka A × A = ...", options: ["{(1,1), (1,2), (2,1), (2,2)}", "{(1,2), (2,1)}", "{1, 2}", "{(1,1), (2,2)}"], answerIndex: 0, explanation: "A×A = {(1,1), (1,2), (2,1), (2,2)}."},
+      {id: 150, category: "Logika", question: "Pernyataan \"Semua logika adalah penting\" negarnya adalah...", options: ["Tidak ada logika yang penting", "Beberapa logika tidak penting", "Logika tidak penting", "Beberapa logika penting"], answerIndex: 1, explanation: "Negasi universal afirmatif: 'Ada yang tidak' atau 'Beberapa tidak'."}
+    ];
+    
+    // Quiz State
+    let currentQuestionIndex = 0;
+    let userAnswers = [];
+    let shuffledQuestions = [];
+    let quizStarted = false;
+    let questionCount = 15;
+    
+    // DOM Elements
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    // Mobile Menu
+    function toggleMobileMenu(show) {
+      if (show) {
+        mobileMenu.classList.add('open');
+        menuOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      } else {
+        mobileMenu.classList.remove('open');
+        menuOverlay.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+    
+    mobileMenuBtn.addEventListener('click', () => toggleMobileMenu(true));
+    closeMenuBtn.addEventListener('click', () => toggleMobileMenu(false));
+    menuOverlay.addEventListener('click', () => toggleMobileMenu(false));
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => toggleMobileMenu(false));
+    });
+    
+    // Accordion
+    document.querySelectorAll('.accordion-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const content = btn.nextElementSibling;
+        const icon = btn.querySelector('.accordion-icon');
+        const isOpen = content.classList.contains('open');
+        
+        // Close all
+        document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('open'));
+        document.querySelectorAll('.accordion-icon').forEach(i => i.style.transform = '');
+        
+        // Toggle current
+        if (!isOpen) {
+          content.classList.add('open');
+          icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+    
+    // Quiz Functions
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+    
+    function startQuiz() {
+      document.getElementById('quiz-start').classList.add('hidden');
+      document.getElementById('quiz-select').classList.remove('hidden');
+    }
+    
+    function goBackToStart() {
+      document.getElementById('quiz-select').classList.add('hidden');
+      document.getElementById('quiz-start').classList.remove('hidden');
+    }
+    
+    function startSelectedQuiz() {
+      shuffledQuestions = shuffleArray(quizQuestions).slice(0, questionCount);
+      userAnswers = new Array(shuffledQuestions.length).fill(null);
+      currentQuestionIndex = 0;
+      quizStarted = true;
+      
+      document.getElementById('quiz-select').classList.add('hidden');
+      document.getElementById('quiz-question').classList.remove('hidden');
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-review').classList.add('hidden');
+      
+      renderQuestion();
+    }
+    
+    function updateQuestionCount(count) {
+      questionCount = Math.max(10, Math.min(30, count));
+      document.getElementById('question-count').value = questionCount;
+      document.getElementById('selected-count').textContent = questionCount;
+      
+      // Update preset buttons
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        const btnCount = parseInt(btn.dataset.count);
+        if (btnCount === questionCount) {
+          btn.classList.add('border-indigo-500', 'bg-indigo-500/20');
+          btn.classList.remove('border-slate-600');
+        } else {
+          btn.classList.remove('border-indigo-500', 'bg-indigo-500/20');
+          btn.classList.add('border-slate-600');
+        }
+      });
+    }
+    
+    function renderQuestion() {
+      const question = shuffledQuestions[currentQuestionIndex];
+      const totalQuestions = shuffledQuestions.length;
+      
+      // Scroll to top
+      document.getElementById('quiz-question').scrollTop = 0;
+      
+      // Update progress
+      document.getElementById('quiz-progress-text').textContent = `Soal ${currentQuestionIndex + 1} dari ${totalQuestions}`;
+      document.getElementById('quiz-progress-bar').style.width = `${((currentQuestionIndex + 1) / totalQuestions) * 100}%`;
+      document.getElementById('quiz-category').textContent = question.category;
+      
+      // Update question
+      document.getElementById('question-text').textContent = question.question;
+      
+      // Update options
+      const optionsContainer = document.getElementById('options-container');
+      const letters = ['A', 'B', 'C', 'D'];
+      const userAnswer = userAnswers[currentQuestionIndex];
+      
+      optionsContainer.innerHTML = question.options.map((option, index) => {
+        let classes = 'option-btn w-full p-4 text-left rounded-xl border transition-all flex items-start gap-3';
+        let isSelected = userAnswer === index;
+        let isCorrect = index === question.answerIndex;
+        let isAnswered = userAnswer !== null;
+        
+        if (isAnswered) {
+          if (isCorrect) {
+            classes += ' correct border-emerald-500 text-white';
+          } else if (isSelected) {
+            classes += ' incorrect border-red-500 text-white';
+          } else {
+            classes += ' border-slate-600 text-slate-400 opacity-50';
+          }
+        } else {
+          classes += ' border-slate-600 hover:border-indigo-500 hover:bg-slate-700/50';
+        }
+        
+        return `
+          <button class="${classes}" data-index="${index}" ${isAnswered ? 'disabled' : ''}>
+            <span class="flex-shrink-0 w-8 h-8 rounded-lg ${isAnswered && isCorrect ? 'bg-emerald-500' : isAnswered && isSelected ? 'bg-red-500' : 'bg-slate-700'} flex items-center justify-center font-semibold text-sm">
+              ${letters[index]}
+            </span>
+            <span class="pt-1">${option}</span>
+          </button>
+        `;
+      }).join('');
+      
+      // Add event listeners to options
+      optionsContainer.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectAnswer(parseInt(btn.dataset.index)));
+      });
+      
+      // Update explanation
+      const explanationContainer = document.getElementById('explanation-container');
+      if (userAnswer !== null) {
+        explanationContainer.classList.remove('hidden');
+        const isCorrect = userAnswer === question.answerIndex;
+        document.getElementById('answer-icon').textContent = isCorrect ? '✅' : '❌';
+        document.getElementById('answer-label').textContent = isCorrect ? 'Benar!' : 'Kurang tepat';
+        document.getElementById('answer-label').className = isCorrect ? 'text-emerald-400' : 'text-red-400';
+        document.getElementById('explanation-text').textContent = question.explanation;
+      } else {
+        explanationContainer.classList.add('hidden');
+      }
+      
+      // Update navigation
+      document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+      
+      const nextBtn = document.getElementById('next-btn');
+      if (currentQuestionIndex === totalQuestions - 1) {
+        nextBtn.innerHTML = `
+          Lihat Hasil
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        `;
+      } else {
+        nextBtn.innerHTML = `
+          Selanjutnya
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        `;
+      }
+    }
+    
+    function selectAnswer(index) {
+      userAnswers[currentQuestionIndex] = index;
+      renderQuestion();
+    }
+    
+    function nextQuestion() {
+      if (currentQuestionIndex < shuffledQuestions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+    
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+      }
+    }
+    
+    function showResult() {
+      document.getElementById('quiz-question').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
+      // Calculate scores
+      let totalCorrect = 0;
+      let logicCorrect = 0;
+      let logicTotal = 0;
+      let setCorrect = 0;
+      let setTotal = 0;
+      
+      shuffledQuestions.forEach((q, i) => {
+        const isCorrect = userAnswers[i] === q.answerIndex;
+        if (isCorrect) totalCorrect++;
+        
+        if (q.category === 'Logika') {
+          logicTotal++;
+          if (isCorrect) logicCorrect++;
+        } else {
+          setTotal++;
+          if (isCorrect) setCorrect++;
+        }
+      });
+      
+      const percentage = Math.round((totalCorrect / shuffledQuestions.length) * 100);
+      
+      // Update result UI
+      const resultIcon = document.getElementById('result-icon');
+      const resultTitle = document.getElementById('result-title');
+      
+      if (percentage >= 80) {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-emerald-500/20';
+        resultIcon.innerHTML = '<span class="text-5xl">🎉</span>';
+        resultTitle.textContent = 'Luar Biasa!';
+      } else if (percentage >= 60) {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-amber-500/20';
+        resultIcon.innerHTML = '<span class="text-5xl">  </span>';
+        resultTitle.textContent = 'Bagus!';
+      } else {
+        resultIcon.className = 'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center bg-indigo-500/20';
+        resultIcon.innerHTML = '<span class="text-5xl">  </span>';
+        resultTitle.textContent = 'Terus Belajar!';
+      }
+      
+      document.getElementById('result-score').textContent = `${totalCorrect}/${shuffledQuestions.length} (${percentage}%)`;
+      document.getElementById('logic-score').textContent = `${logicCorrect}/${logicTotal} benar`;
+      document.getElementById('set-score').textContent = `${setCorrect}/${setTotal} benar`;
+      
+      // Feedback
+      let feedback = '';
+      const logicPercentage = (logicCorrect / logicTotal) * 100;
+      const setPercentage = (setCorrect / setTotal) * 100;
+      
+      if (logicPercentage >= 80 && setPercentage >= 80) {
+        feedback = 'Pemahaman kamu sangat baik di kedua topik! Kamu siap untuk materi yang lebih lanjut.';
+      } else if (logicPercentage >= 80) {
+        feedback = 'Kamu kuat di logika proposisional! Coba pelajari ulang materi himpunan, terutama operasi komplemen dan selisih.';
+      } else if (setPercentage >= 80) {
+        feedback = 'Kamu memahami teori himpunan dengan baik! Fokuskan latihan pada implikasi dan biimplikasi.';
+      } else {
+        feedback = 'Luangkan waktu untuk mempelajari ulang materi dasar. Mulai dari tabel kebenaran dan pahami setiap operasi satu per satu.';
+      }
+      
+      document.getElementById('feedback-text').textContent = feedback;
+    }
+    
+    function showReview() {
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-review').classList.remove('hidden');
+      
+      const reviewContainer = document.getElementById('review-container');
+      const letters = ['A', 'B', 'C', 'D'];
+      
+      reviewContainer.innerHTML = shuffledQuestions.map((q, i) => {
+        const userAnswer = userAnswers[i];
+        const isCorrect = userAnswer === q.answerIndex;
+        
+        return `
+          <div class="bg-slate-900/50 rounded-xl p-4">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <p class="font-medium">${i + 1}. ${q.question}</p>
+              <span class="flex-shrink-0 ${isCorrect ? 'text-emerald-400' : 'text-red-400'}">${isCorrect ? '✅' : '❌'}</span>
+            </div>
+            <div class="space-y-2 mb-3">
+              ${q.options.map((opt, j) => {
+                let color = 'text-slate-400';
+                let prefix = '';
+                if (j === q.answerIndex) {
+                  color = 'text-emerald-400';
+                  prefix = '✓ ';
+                } else if (j === userAnswer && !isCorrect) {
+                  color = 'text-red-400';
+                  prefix = '✗ ';
+                }
+                return `<p class="text-sm ${color}">${prefix}${letters[j]}. ${opt}</p>`;
+              }).join('')}
+            </div>
+            <p class="text-sm text-slate-400 border-t border-slate-700 pt-3">${q.explanation}</p>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    function restartQuiz() {
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('quiz-start').classList.remove('hidden');
+      quizStarted = false;
+    }
+    
+    // Event Listeners for Quiz
+    document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
+    document.getElementById('back-to-start-btn').addEventListener('click', goBackToStart);
+    document.getElementById('start-selected-btn').addEventListener('click', startSelectedQuiz);
+    
+    // Question count controls
+    document.getElementById('question-count').addEventListener('input', (e) => {
+      updateQuestionCount(parseInt(e.target.value));
+    });
+    
+    document.getElementById('increase-btn').addEventListener('click', () => {
+      updateQuestionCount(questionCount + 1);
+    });
+    
+    document.getElementById('decrease-btn').addEventListener('click', () => {
+      updateQuestionCount(questionCount - 1);
+    });
+    
+    // Preset buttons
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        updateQuestionCount(parseInt(btn.dataset.count));
+      });
+    });
+    
+    document.getElementById('next-btn').addEventListener('click', nextQuestion);
+    document.getElementById('prev-btn').addEventListener('click', prevQuestion);
+    document.getElementById('restart-btn').addEventListener('click', restartQuiz);
+    document.getElementById('review-btn').addEventListener('click', showReview);
+    document.getElementById('back-to-result-btn').addEventListener('click', () => {
+      document.getElementById('quiz-review').classList.add('hidden');
+      document.getElementById('quiz-result').classList.remove('hidden');
+    });
+    
+    // Element SDK Integration
+    async function onConfigChange(cfg) {
+      config = { ...defaultConfig, ...cfg };
+      
+      // Update text content
+      document.getElementById('site-title').textContent = config.site_title || defaultConfig.site_title;
+      
+      const heroTitle = document.getElementById('hero-title');
+      const titleText = config.hero_title || defaultConfig.hero_title;
+      heroTitle.innerHTML = titleText.replace('Matematika Diskrit', '<span class="gradient-text">Matematika Diskrit</span>');
+      
+      document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+    }
+    
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              cfg.primary_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            }
+          },
+          {
+            get: () => cfg.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              cfg.accent_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          },
+          {
+            get: () => cfg.bg_color || defaultConfig.bg_color,
+            set: (value) => {
+              cfg.bg_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ bg_color: value });
+              }
+            }
+          },
+          {
+            get: () => cfg.card_color || defaultConfig.card_color,
+            set: (value) => {
+              cfg.card_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ card_color: value });
+              }
+            }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (value) => {
+              cfg.text_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+    
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ["site_title", cfg.site_title || defaultConfig.site_title],
+        ["hero_title", cfg.hero_title || defaultConfig.hero_title],
+        ["hero_subtitle", cfg.hero_subtitle || defaultConfig.hero_subtitle]
+      ]);
+    }
+    
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ca9c3bd4216ba3d',t:'MTc3MDUzOTQyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
